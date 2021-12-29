@@ -8,9 +8,9 @@ const authorization = require("../middleware/authorization");
 // Authentication
 router.use(authentication);
 router.get("/", UserController.getAllUser);
+router.get("/:id", UserController.getUserbyId);
 
 // Authorization
-router.get("/:id", UserController.getUserbyId);
 router.use("/:id", authorization);
 router.put("/:id", UserController.updateUserById);
 router.delete("/:id", UserController.deleteUserById);
