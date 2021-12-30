@@ -22,11 +22,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       caption: {
-        type: DataTypes.STRING(40),
+        type: DataTypes.STRING,
         validate: {
-          max: {
-            args: 40,
-            msg: `Caption cannot be more than 40 characters`,
+          len: {
+            args: [5, 50],
+            msg: `Caption must be between 5 and 50 characters`,
           },
         },
       },

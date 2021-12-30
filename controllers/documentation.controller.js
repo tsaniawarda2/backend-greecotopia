@@ -1,24 +1,53 @@
 const DOCUMENTATION_MODEL = require("../models").Documentation;
-// const PARTICIPANT_MODEL = require("../models").Participant;
+const PARTICIPANT_MODEL = require("../models").Participant;
 const TANAMPOHON_MODEL = require("../models").Tanam_Pohon;
 
 class DocumentationController {
   // Create New Documentation
   static async createNewDocumentation(req, res, next) {
     try {
-      const tanamPohonID = req.params.id;
+      const { caption, image_url, messages, tanam_pohon_id } = req.body;
 
-      const { caption, image_url, messages } = req.body;
-
-      // Data Kosong?
-      if ((!caption, image_url, messages)) {
-        next({
-          code: 400,
-          message: "'caption', 'image_url', 'messages' can't be empty",
-        });
+      const dataTanamPohon = await TANAMPOHON_MODEL.findOne({
+        // include: {
+        //   model: PARTICIPANT_MODEL,
+        //   where: {
+        //     participant_id,
+        //   },
+        // },
+        where: {
+          tanam_pohon_id: Number(tanam_pohon_id),
+        },
+      });
+      if (dataTanamPohon) {
+        // Data Body Kosong?
+        if (!caption || !image_url || !messages) {
+          next({
+            code: 400,
+            message: "'caption', 'image_url', 'messages' can't be empty",
+          });
+        } else {
+          const newDocumentation = await DOCUMENTATION_MODEL.create({
+            caption,
+            image_url,
+            messages,
+            tanam_pohon_id,
+          });
+          res.status(201).send({
+            message: `Success Create New Documentation`,
+            documentation: {
+              documentation_id: newDocumentation.documentation_id,
+              caption,
+              image_url,
+              messages,
+              tanam_pohon_id,
+            },
+          });
+        }
       } else {
-        res.status(201).send({
-          message: `Success Create New Documentation`,
+        next({
+          code: 404,
+          message: `Data Tanam Pohon Id ${tanam_pohon_id} Not Found`,
         });
       }
     } catch (error) {
@@ -54,7 +83,7 @@ class DocumentationController {
       const dataDocumentation = await TANAMPOHON_MODEL.findOne({
         include: {
           model: DOCUMENTATION_MODEL,
-          attributes: ["documentation_id", "image_url", "createdAt"],
+          attributes: ["documentation_id", "caption", "image_url", "createdAt"],
           // include: {
           //   model: PARTICIPANT_MODEL,
           //   attributes: ["name"],
