@@ -55,6 +55,7 @@ class CommentController {
             author: req.body.depends_on.author,
             uuid: req.body.depends_on.uuid,
           },
+          likes: []
         };
 
         const new_rep_comment = rep_comments
@@ -217,6 +218,70 @@ class CommentController {
         res.status(404).send({
           message: `Data Comment where Comment Id is ${commentID} Not Found`,
         });
+      }
+    } catch (error) {
+      res.status(500).send({
+        error: error.message || "Internal Server Error",
+      });
+    }
+  }
+
+  static async updateLikeCommentById(req, res){
+    try {
+      const commentID = req.params.id;
+      const userID = req.userAccount.user_id;
+
+      const { rep_comments_uuid, like } = req.body;
+
+      if(rep_comments_uuid){
+        const dataComment = await COMMENT_MODEL.findOne({
+          where: {
+            comment_uuid: req.body.rep_comments_uuid,
+          },
+        });
+
+        if(dataComment){
+          if(like){
+            COMMENT_MODEL.create({
+              likes: userID
+            })
+          } else {
+            COMMENT_MODEL.destroy({
+              likes: userID
+            })
+          }
+        } else {
+          res.status(404).send({
+            message: `Data Comment where Comment uuId is ${rep_comments_uuid} Not Found`,
+          });
+        }
+      } 
+      else {
+        const dataComment = await COMMENT_MODEL.findOne({
+          where: {
+            comment_id: Number(commentID),
+          },
+        });
+
+        const updateComment = {
+          like : req.body.like
+        }
+
+        if (dataComment) {
+          await COMMENT_MODEL.update(updateComment, {
+            where: {
+              comment_id: Number(commentID),
+            },
+          });
+          res.status(200).send({
+            message: `Data Comment where Comment Id is ${commentID} was Updated like Successfully`,
+            updatedComment: updateComment,
+          });
+        } else {
+          res.status(404).send({
+            message: `Data Comment where Comment Id is ${commentID} Not Found`,
+          });
+        }
       }
     } catch (error) {
       res.status(500).send({
