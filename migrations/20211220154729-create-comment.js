@@ -1,4 +1,7 @@
 'use strict';
+
+const { sequelize } = require("../models");
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Comments', {
@@ -11,6 +14,9 @@ module.exports = {
       context: {
         allowNull: false,
         type: Sequelize.STRING
+      },
+      like: {
+        type: sequelize.BOOLEAN
       },
       rep_comments: {
         type: Sequelize.JSON

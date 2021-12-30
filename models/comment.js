@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   Comment.init({
     comment_id: DataTypes.INTEGER,
     context: DataTypes.STRING,
+    like: DataTypes.BOOLEAN,
     rep_comments: DataTypes.JSON,
     user_id: DataTypes.INTEGER,
     issue_id: DataTypes.INTEGER
