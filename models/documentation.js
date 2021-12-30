@@ -21,7 +21,15 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      caption: DataTypes.STRING(40),
+      caption: {
+        type: DataTypes.STRING(40),
+        validate: {
+          max: {
+            args: 40,
+            msg: `Caption cannot be more than 40 characters`,
+          },
+        },
+      },
       image_url: DataTypes.STRING,
       messages: DataTypes.STRING,
       participant_id: DataTypes.INTEGER,

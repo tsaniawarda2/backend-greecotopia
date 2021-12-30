@@ -7,7 +7,7 @@ module.exports = {
       [
         {
           caption: "Peduli lingkungan untuk bumi yang lebih baik.",
-          image:
+          image_url:
             "https://images.unsplash.com/photo-1617450365226-9bf28c04e130?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
           messages:
             "Sangat menyenangkan bisa berkontribusi untuk bumi. Semangat selalu dalam merawat bumi kita!",
@@ -18,7 +18,7 @@ module.exports = {
         },
         {
           caption: "Tanam pohon untuk membantu bumi lebih sehat.",
-          image:
+          image_url:
             "https://cdn.gaya.id/dynamic/2019/12/19/225/o56A7HMXZb.png?w=500",
           messages:
             "Semangat Tanam Pohon untuk Papua yang lebih hijau. Mari bersama-sama tanam pohon membantu saudara kita di Papua!",
