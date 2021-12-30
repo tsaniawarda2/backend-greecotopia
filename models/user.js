@@ -48,8 +48,8 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      profile: DataTypes.STRING,
-      background: DataTypes.STRING,
+      image_url: DataTypes.STRING,
+      background_url: DataTypes.STRING,
       points: DataTypes.INTEGER,
       role_id: {
         type: DataTypes.INTEGER,

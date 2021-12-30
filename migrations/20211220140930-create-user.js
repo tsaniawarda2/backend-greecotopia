@@ -24,10 +24,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      profile: {
+      image_url: {
         type: Sequelize.STRING,
       },
-      background: {
+      background_url: {
         type: Sequelize.STRING,
       },
       points: {
