@@ -1,9 +1,36 @@
 const DOCUMENTATION_MODEL = require("../models").Documentation;
+const PARTICIPANT_MODEL = require("../models").Participant;
+const TANAMPOHON_MODEL = require("../models").TanamPohon;
 
 class DocumentationController {
   // Create New Documentation
   static async createNewDocumentation(req, res, next) {
     try {
+      const tanamPohonID = req.params.id;
+
+      const { caption, image_url, messages } = req.body;
+
+      // Data Kosong?
+      if ((!caption, image_url, messages)) {
+        next({
+          code: 400,
+          message: "'caption', 'image_url', 'messages' can't be empty",
+        });
+      } else {
+        // Participant?
+        const dataParticipant = await TANAMPOHON_MODEL.findOne({});
+      }
+      // const dataTanamPohon = await TANAMPOHON_MODEL.findAll({
+      //   include: {
+      //     model: DOCUMENTATION_MODEL,
+      //     include: {
+      //       model: PARTICIPANT_MODEL,
+      //     },
+      //   },
+      //   where: {
+      //     id: Number(req.params.tanam_pohon_id),
+      //   },
+      // });
       res.status(201).send({
         message: `Success Create New Documentation`,
         // data: newDocumentation,
