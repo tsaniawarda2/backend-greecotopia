@@ -20,8 +20,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      partisipant_id: {
-        allowNull: false,
+      participant_id: {
         type: Sequelize.INTEGER,
       },
       tanam_pohon_id: {

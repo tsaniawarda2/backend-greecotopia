@@ -23,7 +23,7 @@ module.exports = {
           messages:
             "Semangat Tanam Pohon untuk Papua yang lebih hijau. Mari bersama-sama tanam pohon membantu saudara kita di Papua!",
           participant_id: 1,
-          tanam_pohon_id: 2,
+          tanam_pohon_id: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -33,11 +33,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    await queryInterface.bulkDelete("Documentations", null, {});
   },
 };

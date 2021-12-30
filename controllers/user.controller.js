@@ -8,14 +8,20 @@ class UserController {
     try {
       const dataUser = await USER_MODEL.findAll({
         attributes: {
-          exclude: ["password"],
+          exclude: ["password", "createdAt", "updatedAt"],
         },
       });
-
-      res.status(200).send({
-        message: "Success Get All Users",
-        users: dataUser,
-      });
+      if (!dataUser) {
+        next({
+          code: 404,
+          message: `Data Users is Empty`,
+        });
+      } else {
+        res.status(200).send({
+          message: "Success Get All Users",
+          users: dataUser,
+        });
+      }
     } catch (error) {
       next(error);
     }
@@ -32,7 +38,7 @@ class UserController {
         },
 
         attributes: {
-          exclude: ["password"],
+          exclude: ["password", "createdAt", "updatedAt"],
         },
       });
       if (dataUser) {
@@ -163,6 +169,66 @@ class UserController {
         next({
           code: 404,
           message: `Data User Id ${userID} Not Found`,
+        });
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // GET Top10
+  static async getTopTen(req, res, next) {
+    try {
+      const dataTopTen = await USER_MODEL.findAll({
+        where: {
+          role_id: 2,
+        },
+        offset: 0,
+        limit: 10,
+        order: [["points", "DESC"]],
+        attributes: ["username", "image_url", "points"],
+      });
+
+      res.status(200).send({
+        message: `Success Get Data Top 10`,
+        users: dataTopTen,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // DELETE Points
+  static async updatedPoints(req, res, next) {
+    try {
+      const roleID = req.params.role_id;
+      const points = req.body.points;
+
+      const findRole = await USER_MODEL.findOne({
+        where: {
+          role_id: Number(roleID),
+        },
+      });
+
+      if (!findRole) {
+        next({
+          code: 404,
+          message: `Data Role ${roleID} Not Found`,
+        });
+      } else {
+        const updatedPoints = {
+          points: points,
+        };
+
+        await USER_MODEL.update(updatedPoints, {
+          where: {
+            role_id: Number(roleID),
+          },
+        });
+
+        res.status(200).send({
+          message: `Success Update Data Points`,
+          updatedPoints,
         });
       }
     } catch (error) {

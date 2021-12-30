@@ -8,7 +8,7 @@ module.exports = {
       name: "fk_tanam_pohon_id_in_Documentations",
       references: {
         //Required field
-        table: "TanamPohons",
+        table: "Tanam_Pohons",
         field: "tanam_pohon_id",
       },
       onDelete: "cascade",

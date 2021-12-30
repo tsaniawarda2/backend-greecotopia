@@ -17,8 +17,8 @@ class DocumentationController {
           message: "'caption', 'image_url', 'messages' can't be empty",
         });
       } else {
-        // Participant?
-        const dataParticipant = await TANAMPOHON_MODEL.findOne({});
+        // Tanam Pohon?
+        const dataTanamPohon = await TANAMPOHON_MODEL.findAll({});
       }
       // const dataTanamPohon = await TANAMPOHON_MODEL.findAll({
       //   include: {
@@ -43,9 +43,17 @@ class DocumentationController {
   // Get All Documentation
   static async getAllDocumentation(req, res, next) {
     try {
+      const data = await TANAMPOHON_MODEL.findAll({
+        include: {
+          model: DOCUMENTATION_MODEL,
+          // include: {
+          //   model: Participant,
+          // },
+        },
+      });
       res.status(200).send({
         message: `Success Get Data Documentations`,
-        // data: newDocumentation,
+        documentations: data,
       });
     } catch (error) {
       next(error);

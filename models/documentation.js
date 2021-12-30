@@ -4,13 +4,13 @@ module.exports = (sequelize, DataTypes) => {
   class Documentation extends Model {
     static associate(models) {
       // Documentation.belongsTo(models.Participant, {
-      //   foreignKey: "articipant_id",
-      //   targetKey: "articipant_id",
+      //   foreignKey: "Participant_id",
+      //   targetKey: "Participant_id",
       // });
-      // Documentation.belongsTo(models.TanamPohon, {
-      //   foreignKey: "tanam_pohon_id",
-      //   targetKey: "tanam_pohon_id",
-      // });
+      Documentation.belongsTo(models.Tanam_Pohon, {
+        foreignKey: "tanam_pohon_id",
+        targetKey: "tanam_pohon_id",
+      });
     }
   }
   Documentation.init(
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       caption: DataTypes.STRING(40),
       image_url: DataTypes.STRING,
       messages: DataTypes.STRING,
-      partisipant_id: DataTypes.INTEGER,
+      participant_id: DataTypes.INTEGER,
       tanam_pohon_id: DataTypes.INTEGER,
     },
     {

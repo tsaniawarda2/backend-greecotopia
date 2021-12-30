@@ -12,9 +12,4 @@ router.get("/:id", DocumentationController.getDocumentationById);
 router.use(authentication);
 router.post("/", DocumentationController.createNewDocumentation);
 
-// Authorization
-router.use("/:id", authorization);
-router.put("/:id", DocumentationController.updateDocumentationById);
-router.delete("/:id", DocumentationController.deleteDocumentationById);
-
 module.exports = router;
