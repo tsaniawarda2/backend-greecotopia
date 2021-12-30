@@ -8,7 +8,7 @@ class AuthController {
   // Register
   static async Register(req, res, next) {
     try {
-      const { fullname, email, username, password, avatar } = req.body;
+      const { fullname, email, username, password, points } = req.body;
 
       // Data kosong?
       if (!fullname || !email || !username || !password) {
@@ -37,7 +37,7 @@ class AuthController {
             email,
             username,
             password,
-            avatar,
+            points,
           });
 
           res.status(201).send({
@@ -47,6 +47,7 @@ class AuthController {
               fullname,
               username,
               email,
+              points,
             },
           });
         }
@@ -79,12 +80,13 @@ class AuthController {
         const checkPw = comparePassword(password, dataUser.password);
         if (checkPw) {
           // jika password benar
-          const { user_id, email, username, avatar, role_id, Role } = dataUser;
+          const { user_id, email, username, image_url, role_id, Role } =
+            dataUser;
           const token = {
             user_id,
             email,
             username,
-            avatar,
+            image_url,
             role_id,
             roleName: Role?.name || null,
           };

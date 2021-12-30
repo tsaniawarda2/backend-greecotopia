@@ -68,8 +68,8 @@ module.exports = (sequelize, DataTypes) => {
       hooks: {
         beforeCreate(model) {
           model.password = hashPassword(model.password);
-          if (!model.avatar) {
-            model.avatar = "img1";
+          if (!model.points) {
+            model.points = 0;
           }
           if (!model.role_id) {
             model.role_id = 2;
