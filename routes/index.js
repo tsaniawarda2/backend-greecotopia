@@ -11,6 +11,7 @@ const issueRoutes = require("./issues");
 
 const favoriteissuesRoutes = require("./favoriteissues");
 const commentRoutes = require("./comment");
+const documentationRoutes = require("./documentation");
 const messageRoutes = require("./message");
 
 // Check ping
@@ -49,6 +50,9 @@ router.use("/issues", issueRoutes);
 router.use("/favoriteissues", favoriteissuesRoutes);
 // Path Comments
 router.use("/comments", commentRoutes);
+// Path Documentations
+router.use("/documentations", documentationRoutes);
+
 // Path Messages
 router.use("/messages", messageRoutes);
 
