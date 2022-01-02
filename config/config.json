@@ -2,22 +2,26 @@
   "development": {
     "username": "root",
     "password": null,
+<<<<<<< HEAD
     "database": "greecotopia_final",
+=======
+    "database": "db_greecotopia",
+>>>>>>> ee77f026368bebcf6985cc7a6a50cfc5855f0977
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
-    "username": "sql6460919",
-    "password": "MIvsN7M8jI",
-    "database": "sql6460919",
-    "host": "sql6.freemysqlhosting.net",
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
-    "username": "sql6460919",
-    "password": "MIvsN7M8jI",
-    "database": "sql6460919",
-    "host": "sql6.freemysqlhosting.net",
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   }
 }

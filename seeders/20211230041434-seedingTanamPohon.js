@@ -1,9 +1,9 @@
-"use strict";
-const data = require("../data/tanam-pohon.json");
+'use strict';
+const data = require('../data/tanam-pohon.json')
 
-const dataTanamPohon = [];
+const dataTanamPohon = []
 
-data.forEach((tanamPohon) => {
+data.forEach(tanamPohon => {
   const temp = {
     title: tanamPohon.title,
     image_url: tanamPohon.image_url,
@@ -14,17 +14,17 @@ data.forEach((tanamPohon) => {
     reward_point: tanamPohon.reward_point,
     due_date: tanamPohon.date,
     createdAt: new Date(),
-    updatedAt: new Date(),
-  };
-  dataTanamPohon.push(temp);
-});
+    updatedAt: new Date()
+  }
+  dataTanamPohon.push(temp)
+})
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert("Tanam_Pohons", dataTanamPohon, {});
+     await queryInterface.bulkInsert('Tanam_Pohons', dataTanamPohon, {})
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete("Tanam_Pohons", null, {});
-  },
+     await queryInterface.bulkDelete('Tanam_Pohons', null, {});
+  }
 };
