@@ -203,7 +203,6 @@ class CommentController {
             user_id: Number(userID),
           },
         });
-        console.log(commentUser);
         if (Number(req.userAccount.user_id) === Number(dataComment.user_id)) {
           res.status(200).send({
             message: `Data Comment where Comment Id is ${commentID} was Deleted Successfully`,
@@ -230,42 +229,73 @@ class CommentController {
     try {
       const commentID = req.params.id;
       const userID = req.userAccount.user_id;
+  
 
       const { rep_comments_uuid, like } = req.body;
       
+      const dataComment = await COMMENT_MODEL.findOne({
+        where: {
+          comment_id: Number(commentID)
+        },
+      });
+      
       if(rep_comments_uuid){
-        const dataComment = await COMMENT_MODEL.findOne({
-          where: {
-            rep_comments : [{
-              uuid: rep_comments_uuid,
-            }]
-          },
-        });
-
-        console.log(dataComment);
         if(dataComment){
-          if(like){
-            COMMENT_MODEL.create({
-              likes: userID
+          const repComment = dataComment.dataValues.rep_comments
+          const repCommentParse = JSON.parse(repComment)
+
+          const findRepComment = repCommentParse.filter(rep_comment => rep_comment.uuid == rep_comments_uuid)
+
+          if(findRepComment.length !== 0){
+            const currRepComment = dataComment.dataValues.rep_comments ? JSON.parse(dataComment.dataValues.rep_comments) : []
+
+            const newRepComments = currRepComment.map(comment => {
+              if(comment.uuid === rep_comments_uuid){
+                if(like){
+                  comment.likes.push(userID)
+                } else {
+                  for( let i = 0; i < comment.likes.length; i++){ 
+                                   
+                    if ( comment.likes[i] === userID) { 
+                        comment.likes.splice(i, 1); 
+                        i--; 
+                    }
+                }
+                }
+              } else {
+                return comment
+              }
             })
-          } else {
-            COMMENT_MODEL.destroy({
-              likes: userID
-            })
+            
+            const updateNewRepComment = currRepComment
+
+            await COMMENT_MODEL.update(
+              {
+                rep_comments: updateNewRepComment,
+              },
+              {
+                where: {
+                  comment_id: req.params.id,
+                },
+              }
+            );
+            res.status(200).send({
+              message: "Success like a reply comment!",
+              data: updateNewRepComment,
+            });
+          }
+          else {
+            res.status(404).send({
+              message: `Data Reply Comment where Comment uuid is ${rep_comments_uuid} Not Found`,
+            });
           }
         } else {
           res.status(404).send({
-            message: `Data Comment where Comment uuId is ${rep_comments_uuid} Not Found`,
+            message: `Data Comment where Comment Id is ${commentID} Not Found`,
           });
         }
       } 
       else {
-        const dataComment = await COMMENT_MODEL.findOne({
-          where: {
-            comment_id: Number(commentID),
-          },
-        });
-
         const updateComment = {
           like : req.body.like
         }
