@@ -24,8 +24,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      avatar: {
-        type: Sequelize.ENUM("img1", "img2", "img3"),
+      image_url: {
+        type: Sequelize.STRING,
+      },
+      background_url: {
+        type: Sequelize.STRING,
+      },
+      points: {
+        type: Sequelize.INTEGER,
       },
       role_id: {
         type: Sequelize.INTEGER,

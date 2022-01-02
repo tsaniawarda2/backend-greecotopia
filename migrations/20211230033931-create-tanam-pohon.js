@@ -1,24 +1,43 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Forums", {
-      forum_id: {
+    await queryInterface.createTable("Tanam_Pohons", {
+      tanam_pohon_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
       title: {
-        allowNull: false,
-        type: Sequelize.STRING(40),
-      },
-      image: {
-        allowNull: false,
         type: Sequelize.STRING,
+        allowNull: false,
+      },
+      image_url: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       description: {
-        allowNull: false,
         type: Sequelize.STRING,
+        allowNull: false,
+      },
+      location: {
+        type: Sequelize.STRING,
+      },
+      date: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      time: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      reward_point: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      due_date: {
+        type: Sequelize.DATE,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -31,6 +50,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Forums");
+    await queryInterface.dropTable("Tanam_Pohons");
   },
 };

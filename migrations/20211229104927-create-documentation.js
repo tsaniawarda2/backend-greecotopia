@@ -1,42 +1,29 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Issues", {
-      issue_id: {
+    await queryInterface.createTable("Documentations", {
+      documentation_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      title: {
-        allowNull: false,
-        type: Sequelize.STRING(40),
-      },
-      summary: {
+      caption: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      author_name: {
-        allowNull: false,
-        type: Sequelize.STRING(40),
-      },
-      image: {
+      image_url: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      likes: {
+      messages: {
         allowNull: false,
+        type: Sequelize.STRING,
+      },
+      participant_id: {
         type: Sequelize.INTEGER,
       },
-      comments: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-      },
-      tag_id: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-      },
-      forum_id: {
+      tanam_pohon_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
@@ -51,6 +38,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Issues");
+    await queryInterface.dropTable("Documentations");
   },
 };

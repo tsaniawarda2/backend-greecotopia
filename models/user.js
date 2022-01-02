@@ -1,5 +1,4 @@
 "use strict";
-const req = require("express/lib/request");
 const { Model } = require("sequelize");
 const { hashPassword } = require("../helpers/bcrypt");
 module.exports = (sequelize, DataTypes) => {
@@ -49,15 +48,9 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      avatar: {
-        type: DataTypes.ENUM("img1", "img2", "img3"),
-        validate: {
-          isIn: {
-            args: [["img1", "img2", "img3"]],
-            msg: "You can only select avatar 'img1', 'img2', 'img3'",
-          },
-        },
-      },
+      image_url: DataTypes.STRING,
+      background_url: DataTypes.STRING,
+      points: DataTypes.INTEGER,
       role_id: {
         type: DataTypes.INTEGER,
         validate: {
@@ -75,8 +68,8 @@ module.exports = (sequelize, DataTypes) => {
       hooks: {
         beforeCreate(model) {
           model.password = hashPassword(model.password);
-          if (!model.avatar) {
-            model.avatar = "img1";
+          if (!model.points) {
+            model.points = 0;
           }
           if (!model.role_id) {
             model.role_id = 2;
