@@ -4,16 +4,12 @@ class TanamPohonController {
   // GET All Tanam Pohon
   static async getAllTanamPohons(req, res) {
     try {
-<<<<<<< HEAD
-      const dataTanamPohon = await TANAMPOHON_MODEL.findAll();
-=======
       const dataTanamPohon = await TANAMPOHON_MODEL.findAll({
         include: {
           model: Participant,
           attributes: ['user_id']
         }
       });
->>>>>>> ee77f026368bebcf6985cc7a6a50cfc5855f0977
 
       if (dataTanamPohon.length != 0) {
         res.status(200).send({
@@ -38,13 +34,10 @@ class TanamPohonController {
       const tanamPohonID = req.params.id;
 
       const dataTanamPohon = await TANAMPOHON_MODEL.findOne({
-<<<<<<< HEAD
-=======
         include: {
           model: Participant,
           attributes: ['user_id']
         },
->>>>>>> ee77f026368bebcf6985cc7a6a50cfc5855f0977
         where: {
           tanam_pohon_id: Number(tanamPohonID),
         },
