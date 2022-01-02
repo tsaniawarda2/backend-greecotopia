@@ -1,24 +1,23 @@
 {
   "development": {
-    "username": "sql6460919",
-    "password": "MIvsN7M8jI",
-    "database": "sql6460919",
-    "host": "sql6.freemysqlhosting.net",
-    "port": "3306",
+    "username": "root",
+    "password": null,
+    "database": "database_greecotopia",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
-    "username": "sql6460919",
-    "password": "MIvsN7M8jI",
-    "database": "sql6460919",
-    "host": "sql6.freemysqlhosting.net",
+    "username": "root",
+    "password": null,
+    "database": "database_greecotopia",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
-    "username": "sql6460919",
-    "password": "MIvsN7M8jI",
-    "database": "sql6460919",
-    "host": "sql6.freemysqlhosting.net",
+    "username": "root",
+    "password": null,
+    "database": "database_greecotopia",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   }
 }

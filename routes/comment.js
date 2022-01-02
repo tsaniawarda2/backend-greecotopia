@@ -12,6 +12,6 @@ router.use(authentication);
 router.post("/issue/:id", CommentController.postNewComment);
 router.post("/:id", CommentController.postNewRepComment);
 router.delete("/:id", CommentController.deleteCommentById);
-router.patch(":id", CommentController.updateLikeCommentById);
+router.patch("/:id", CommentController.updateLikeCommentById);
 
 module.exports = router;

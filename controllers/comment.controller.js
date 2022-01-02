@@ -232,14 +232,17 @@ class CommentController {
       const userID = req.userAccount.user_id;
 
       const { rep_comments_uuid, like } = req.body;
-
+      
       if(rep_comments_uuid){
         const dataComment = await COMMENT_MODEL.findOne({
           where: {
-            comment_uuid: req.body.rep_comments_uuid,
+            rep_comments : [{
+              uuid: rep_comments_uuid,
+            }]
           },
         });
 
+        console.log(dataComment);
         if(dataComment){
           if(like){
             COMMENT_MODEL.create({
