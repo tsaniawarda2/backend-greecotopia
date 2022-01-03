@@ -11,6 +11,8 @@ const issueRoutes = require("./issues");
 
 const favoriteissuesRoutes = require("./favoriteissues");
 const commentRoutes = require("./comment");
+const tanamPohonRoutes = require("./tanampohon")
+const documentationRoutes = require("./documentation");
 const messageRoutes = require("./message");
 
 // Check ping
@@ -29,7 +31,6 @@ router.get("/", (req, res) => {
             <li>GET All Forums <a href="https://pure-thicket-57785.herokuapp.com/forums">https://pure-thicket-57785.herokuapp.com/forums</a></li>
             <li>GET All Tags <a href="https://pure-thicket-57785.herokuapp.com/forums">https://pure-thicket-57785.herokuapp.com/tags</a></li>
             <li>GET All Comments <a href="https://pure-thicket-57785.herokuapp.com/forums">https://pure-thicket-57785.herokuapp.com/comments</a></li>
-
             <p> You can also get data by id for endpoints Issues, Tags, Forums, and Comments, example path : </p>
             <li>GET Issues by Id (Id = 1)  <a href="https://pure-thicket-57785.herokuapp.com/forums/1">https://pure-thicket-57785.herokuapp.com/issues/1</a></li>
             `);
@@ -49,6 +50,10 @@ router.use("/issues", issueRoutes);
 router.use("/favoriteissues", favoriteissuesRoutes);
 // Path Comments
 router.use("/comments", commentRoutes);
+//Path Tanam Pohon
+router.use("/tanampohons", tanamPohonRoutes)
+// Path Documentations
+router.use("/documentations", documentationRoutes);
 // Path Messages
 router.use("/messages", messageRoutes);
 

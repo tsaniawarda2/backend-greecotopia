@@ -8,6 +8,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
         rep_comments: null,
+        like: false,
         user_id: 1,
         issue_id: 1
       },
@@ -16,16 +17,18 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
         rep_comments: null,
+        like: false,
         user_id: 2,
-        issue_id: 3
+        issue_id: 2
       },
       {
         context: "Apa yang bisa kita lakukan untuk beraksi supaya issue ini tidak semakin parah?",
         createdAt: new Date(),
         updatedAt: new Date(),
         rep_comments: null,
+        like: true,
         user_id: 1,
-        issue_id: 2
+        issue_id: 3
       },
     ]);
   },
