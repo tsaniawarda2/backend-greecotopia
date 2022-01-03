@@ -1,6 +1,6 @@
 // Dotenv
-const dotenv = require("dotenv");
-dotenv.config();
+const env = process.env.NODE_ENV || "development";
+if (env === "development" || env === "test") require("dotenv").config();
 
 // Import Module
 const express = require("express");
