@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       like: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.JSON
       },
       rep_comments: {
         type: Sequelize.JSON

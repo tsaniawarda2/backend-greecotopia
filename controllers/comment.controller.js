@@ -9,6 +9,7 @@ class CommentController {
 
       const newComment = {
         context: req.body.context,
+        like: new Array(),
         createdAt: new Date(),
         updatedAt: new Date(),
         rep_comments: null,
@@ -198,7 +199,7 @@ class CommentController {
       });
 
       if (dataComment) {
-        const commentUser = await COMMENT_MODEL.destroy({
+        await COMMENT_MODEL.destroy({
           where: {
             comment_id: Number(commentID),
             user_id: Number(userID),
@@ -238,9 +239,9 @@ class CommentController {
           comment_id: Number(commentID)
         },
       });
-      
-      if(rep_comments_uuid){
-        if(dataComment){
+
+      if(dataComment){
+        if(rep_comments_uuid){
           const repComment = dataComment.dataValues.rep_comments
           const repCommentParse = JSON.parse(repComment)
 
@@ -248,21 +249,14 @@ class CommentController {
 
           if(findRepComment.length !== 0){
             const currRepComment = dataComment.dataValues.rep_comments ? JSON.parse(dataComment.dataValues.rep_comments) : []
-
+            console.log(currRepComment);
             const newRepComments = currRepComment.map(comment => {
               if(comment.uuid === rep_comments_uuid){
                 if(like){
+                  console.log(comment, "<< like");
                   comment.likes.push(userID)
                 } else {
-                  // for( let i = 0; i < comment.likes.length; i++){ 
-                                   
-                  //   if ( comment.likes[i] === userID) { 
-                  //       comment.likes.splice(i, 1); 
-                  //       i--; 
-                  //   }
-                // }
-
-                comment.likes = comment.likes.filter(commentLike => commentLike !== userID)
+                  comment.likes = comment.likes.filter(commentLike => commentLike !== userID)
                 }
                 return comment
               } else {
@@ -291,31 +285,38 @@ class CommentController {
             });
           }
         } else {
-          res.status(404).send({
-            message: `Data Comment where Comment Id is ${commentID} Not Found`,
-          });
-        }
-      } 
-      else {
-        const updateComment = {
-          like : req.body.like
-        }
+          let currCommentLike = JSON.parse(dataComment.dataValues.like)
+          console.log(currCommentLike,"<<< curr Like");
 
-        if (dataComment) {
-          await COMMENT_MODEL.update(updateComment, {
-            where: {
-              comment_id: Number(commentID),
+          if(like){
+            currCommentLike.push(userID)
+          } else {
+            currCommentLike = currCommentLike.filter(commentLike => commentLike !== userID)
+          }
+          
+          const updateLike = currCommentLike
+          console.log(updateLike, "new");
+
+          await COMMENT_MODEL.update(
+            {
+              like : updateLike
             },
-          });
+            {
+              where: {
+                comment_id: req.params.id,
+              },
+            }
+          );
+          
           res.status(200).send({
             message: `Data Comment where Comment Id is ${commentID} was Updated like Successfully`,
-            updatedComment: updateComment,
-          });
-        } else {
-          res.status(404).send({
-            message: `Data Comment where Comment Id is ${commentID} Not Found`,
+            updatedLike: updateLike,
           });
         }
+      } else {
+        res.status(404).send({
+          message: `Data Comment where Comment Id is ${commentID} Not Found`,
+        });
       }
     } catch (error) {
       res.status(500).send({

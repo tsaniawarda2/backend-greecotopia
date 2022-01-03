@@ -8,7 +8,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
         rep_comments: null,
-        like: false,
+        like: null,
         user_id: 1,
         issue_id: 1
       },
@@ -17,7 +17,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
         rep_comments: null,
-        like: false,
+        like: null,
         user_id: 2,
         issue_id: 2
       },
@@ -26,7 +26,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
         rep_comments: null,
-        like: true,
+        like: null,
         user_id: 1,
         issue_id: 3
       },
