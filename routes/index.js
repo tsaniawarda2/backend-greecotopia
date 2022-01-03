@@ -11,6 +11,7 @@ const issueRoutes = require("./issues");
 
 const favoriteissuesRoutes = require("./favoriteissues");
 const commentRoutes = require("./comment");
+const tanamPohonRoutes = require("./tanampohon")
 const documentationRoutes = require("./documentation");
 const messageRoutes = require("./message");
 
