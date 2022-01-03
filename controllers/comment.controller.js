@@ -122,6 +122,7 @@ class CommentController {
         });
       }
     } catch (error) {
+      console.log(error);
       res.status(500).send({
         error: "Internal Server Error",
       });
@@ -230,7 +231,6 @@ class CommentController {
       const commentID = req.params.id;
       const userID = req.userAccount.user_id;
   
-
       const { rep_comments_uuid, like } = req.body;
       
       const dataComment = await COMMENT_MODEL.findOne({
@@ -254,24 +254,25 @@ class CommentController {
                 if(like){
                   comment.likes.push(userID)
                 } else {
-                  for( let i = 0; i < comment.likes.length; i++){ 
+                  // for( let i = 0; i < comment.likes.length; i++){ 
                                    
-                    if ( comment.likes[i] === userID) { 
-                        comment.likes.splice(i, 1); 
-                        i--; 
-                    }
+                  //   if ( comment.likes[i] === userID) { 
+                  //       comment.likes.splice(i, 1); 
+                  //       i--; 
+                  //   }
+                // }
+
+                comment.likes = comment.likes.filter(commentLike => commentLike !== userID)
                 }
-                }
+                return comment
               } else {
                 return comment
               }
             })
-            
-            const updateNewRepComment = currRepComment
 
             await COMMENT_MODEL.update(
               {
-                rep_comments: updateNewRepComment,
+                rep_comments: newRepComments,
               },
               {
                 where: {
@@ -281,7 +282,7 @@ class CommentController {
             );
             res.status(200).send({
               message: "Success like a reply comment!",
-              data: updateNewRepComment,
+              data: newRepComments,
             });
           }
           else {
