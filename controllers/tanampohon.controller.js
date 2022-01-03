@@ -5,10 +5,10 @@ class TanamPohonController {
   static async getAllTanamPohons(req, res) {
     try {
       const dataTanamPohon = await TANAMPOHON_MODEL.findAll({
-        include: {
-          model: Participant,
-          attributes: ['user_id']
-        }
+        // include: {
+        //   model: Participant,
+        //   attributes: ['user_id']
+        // }
       });
 
       if (dataTanamPohon.length != 0) {

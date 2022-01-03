@@ -1,8 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-const TanamPohonController = require('../controllers/tanampohon.controller');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Tanam_Pohon extends Model {
     /**
