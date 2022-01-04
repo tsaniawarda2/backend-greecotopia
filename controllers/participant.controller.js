@@ -12,7 +12,9 @@ class ParticipantController {
           tanam_pohon_id: Number(tanam_pohon_id),
         },
       });
+      // Data Tanam Pohon Ada?
       if (dataTanamPohon) {
+        // Data Body Kosong?
         if (!name || !no_hp || !number_of_trees) {
           next({
             code: 400,
@@ -28,7 +30,7 @@ class ParticipantController {
           });
 
           res.status(200).json({
-            message: "Success post new Participant!",
+            message: "Success Register Tanam Pohon!",
             participant: {
               participant_id: newParticipant.participant_id,
               name,

@@ -39,7 +39,7 @@ class DocumentationController {
               tanam_pohon_id,
             });
             res.status(201).send({
-              message: `Success Create New Documentation`,
+              message: `Success Create New Documentation!`,
               documentation: {
                 documentation_id: newDocumentation.documentation_id,
                 caption,
