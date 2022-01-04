@@ -1,4 +1,5 @@
 const DOCUMENTATION_MODEL = require("../models").Documentation;
+const USER_MODEL = require("../models").User;
 const PARTICIPANT_MODEL = require("../models").Participant;
 const TANAMPOHON_MODEL = require("../models").Tanam_Pohon;
 
@@ -9,16 +10,11 @@ class DocumentationController {
       const { caption, image_url, messages, tanam_pohon_id } = req.body;
 
       const dataTanamPohon = await TANAMPOHON_MODEL.findOne({
-        // include: {
-        //   model: PARTICIPANT_MODEL,
-        //   where: {
-        //     participant_id,
-        //   },
-        // },
         where: {
           tanam_pohon_id: Number(tanam_pohon_id),
         },
       });
+      // Data Tanam Pohon Ada?
       if (dataTanamPohon) {
         // Data Body Kosong?
         if (!caption || !image_url || !messages) {
@@ -27,22 +23,38 @@ class DocumentationController {
             message: "'caption', 'image_url', 'messages' can't be empty",
           });
         } else {
-          const newDocumentation = await DOCUMENTATION_MODEL.create({
-            caption,
-            image_url,
-            messages,
-            tanam_pohon_id,
+          const dataParticipant = await PARTICIPANT_MODEL.findOne({
+            where: {
+              user_id: req.userAccount.user_id,
+            },
           });
-          res.status(201).send({
-            message: `Success Create New Documentation`,
-            documentation: {
-              documentation_id: newDocumentation.documentation_id,
+          // Data Participant Ada?
+          if (dataParticipant !== null) {
+            const participantID = dataParticipant.dataValues.participant_id;
+            const newDocumentation = await DOCUMENTATION_MODEL.create({
               caption,
               image_url,
               messages,
+              participantID,
               tanam_pohon_id,
-            },
-          });
+            });
+            res.status(201).send({
+              message: `Success Create New Documentation`,
+              documentation: {
+                documentation_id: newDocumentation.documentation_id,
+                caption,
+                image_url,
+                messages,
+                participantID,
+                tanam_pohon_id,
+              },
+            });
+          } else {
+            next({
+              code: 401,
+              message: "You haven't registered for this activity",
+            });
+          }
         }
       } else {
         next({
@@ -84,10 +96,10 @@ class DocumentationController {
         include: {
           model: DOCUMENTATION_MODEL,
           attributes: ["documentation_id", "caption", "image_url", "createdAt"],
-          // include: {
-          //   model: PARTICIPANT_MODEL,
-          //   attributes: ["name"],
-          // },
+          include: {
+            model: PARTICIPANT_MODEL,
+            attributes: ["name"],
+          },
           order: [["createdAt", "DESC"]],
         },
         where: {
@@ -124,10 +136,10 @@ class DocumentationController {
         attributes: {
           exclude: ["participant_id", "tanam_pohon_id", "updatedAt"],
         },
-        // include: {
-        //   model: PARTICIPANT_MODEL,
-        //   attributes: ["name"]
-        // },
+        include: {
+          model: PARTICIPANT_MODEL,
+          attributes: ["name"],
+        },
       });
       if (dataDocumentation) {
         res.status(200).send({

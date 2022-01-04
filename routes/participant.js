@@ -5,7 +5,10 @@ const ParticipantController = require("../controllers/participant.controller");
 const authentication = require("../middleware/authentication");
 
 router.get("/", ParticipantController.getAllParticipants);
-router.get("/tanam_pohon/:id", ParticipantController.getParticipantByTanamPohonId);
+router.get(
+  "/tanam_pohon/:id",
+  ParticipantController.getParticipantByTanamPohonId
+);
 router.get("/:id", ParticipantController.getParticipantById);
 
 // Authentication

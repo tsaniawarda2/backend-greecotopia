@@ -2,16 +2,10 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    /**
-     * Add altering commands here.
-     *
-     * Example:
-     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
-     */
-    await queryInterface.addConstraint("Participants", {
+    await queryInterface.addConstraint("Documentations", {
       fields: ["tanam_pohon_id"],
       type: "foreign key",
-      name: "fk_tanampohon_in_participant",
+      name: "fk_tanam_pohon_id_in_Documentations",
       references: {
         //Required field
         table: "Tanam_Pohons",
@@ -23,15 +17,9 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
     await queryInterface.removeConstraint(
-      "Participants",
-      "fk_tanampohon_in_participant",
+      "Documentations",
+      "fk_tanam_pohon_id_in_Documentations",
       {}
     );
   },

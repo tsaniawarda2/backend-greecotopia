@@ -11,8 +11,8 @@ const issueRoutes = require("./issues");
 
 const favoriteissuesRoutes = require("./favoriteissues");
 const commentRoutes = require("./comment");
-const tanamPohonRoutes = require("./tanampohon")
-const participantRoutes = require("./participant")
+const tanamPohonRoutes = require("./tanampohon");
+const participantRoutes = require("./participant");
 const documentationRoutes = require("./documentation");
 const messageRoutes = require("./message");
 
@@ -54,7 +54,7 @@ router.use("/comments", commentRoutes);
 //Path Tanam Pohon
 router.use("/tanampohons", tanamPohonRoutes);
 //Path Participant
-router.use("/participants", participantRoutes); 
+router.use("/participants", participantRoutes);
 // Path Documentations
 router.use("/documentations", documentationRoutes);
 // Path Messages
