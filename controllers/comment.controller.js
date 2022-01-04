@@ -100,6 +100,7 @@ class CommentController {
             context,
             createdAt,
             updatedAt,
+            like,
             rep_comments,
             user_id,
             issue_id,
@@ -108,6 +109,7 @@ class CommentController {
             context,
             createdAt,
             updatedAt,
+            like,
             rep_comments: rep_comments ? JSON.parse(rep_comments) : [],
             user_id,
             issue_id,
@@ -285,17 +287,15 @@ class CommentController {
             });
           }
         } else {
-          let currCommentLike = JSON.parse(dataComment.dataValues.like)
-          console.log(currCommentLike,"<<< curr Like");
+          let currCommentLike = dataComment.dataValues.like ? dataComment.dataValues.like : [];
 
           if(like){
-            currCommentLike.push(userID)
+            currCommentLike.push({user_id: userID})
           } else {
-            currCommentLike = currCommentLike.filter(commentLike => commentLike !== userID)
+            currCommentLike = currCommentLike.filter(commentLike => commentLike.user_id !== userID);
           }
           
-          const updateLike = currCommentLike
-          console.log(updateLike, "new");
+          const updateLike = currCommentLike;
 
           await COMMENT_MODEL.update(
             {
