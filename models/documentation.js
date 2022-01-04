@@ -3,13 +3,13 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Documentation extends Model {
     static associate(models) {
-      // Documentation.belongsTo(models.Participant, {
-      //   foreignKey: "Participant_id",
-      //   targetKey: "Participant_id",
-      // });
       Documentation.belongsTo(models.Tanam_Pohon, {
         foreignKey: "tanam_pohon_id",
         targetKey: "tanam_pohon_id",
+      });
+      Documentation.belongsTo(models.Participant, {
+        foreignKey: "participant_id",
+        targetKey: "participant_id",
       });
     }
   }

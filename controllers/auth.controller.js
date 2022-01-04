@@ -59,55 +59,59 @@ class AuthController {
 
   // Login
   static async Login(req, res, next) {
-    const { username, password } = req.body;
+    try {
+      const { username, password } = req.body;
 
-    if (!username || !password) {
-      next({
-        code: 400,
-        message: "Username and Password can't be empty",
-      });
-    } else {
-      const dataUser = await User.findOne({
-        where: {
-          username,
-        },
-        include: {
-          model: Role,
-        },
-      });
-      if (dataUser) {
-        // jika data user ada
-        const checkPw = comparePassword(password, dataUser.password);
-        if (checkPw) {
-          // jika password benar
-          const { user_id, email, username, image_url, role_id, Role } =
-            dataUser;
-          const token = {
-            user_id,
-            email,
+      if (!username || !password) {
+        next({
+          code: 400,
+          message: "Username and Password can't be empty",
+        });
+      } else {
+        const dataUser = await User.findOne({
+          where: {
             username,
-            image_url,
-            role_id,
-            roleName: Role?.name || null,
-          };
+          },
+          include: {
+            model: Role,
+          },
+        });
+        if (dataUser) {
+          // jika data user ada
+          const checkPw = comparePassword(password, dataUser.password);
+          if (checkPw) {
+            // jika password benar
+            const { user_id, email, username, image_url, role_id, Role } =
+              dataUser;
+            const token = {
+              user_id,
+              email,
+              username,
+              image_url,
+              role_id,
+              roleName: Role?.name || null,
+            };
 
-          const accessToken = generateToken(token);
-          res.status(200).send({
-            message: "Login Success!",
-            token: accessToken,
-          });
+            const accessToken = generateToken(token);
+            res.status(200).send({
+              message: "Login Success!",
+              token: accessToken,
+            });
+          } else {
+            next({
+              code: 401,
+              message: "Invalid Username or Password!",
+            });
+          }
         } else {
           next({
             code: 401,
             message: "Invalid Username or Password!",
           });
         }
-      } else {
-        next({
-          code: 401,
-          message: "Invalid Username or Password!",
-        });
       }
+    } catch (error) {
+      next(error);
     }
   }
 }
