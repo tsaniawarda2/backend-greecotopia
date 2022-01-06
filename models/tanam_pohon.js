@@ -4,6 +4,14 @@ module.exports = (sequelize, DataTypes) => {
   class Tanam_Pohon extends Model {
     static associate(models) {
       // define association here
+      Tanam_Pohon.hasMany(models.Documentation, {
+        sourceKey: "tanam_pohon_id",
+        foreignKey: "tanam_pohon_id",
+      });
+      Tanam_Pohon.hasMany(models.Participant, {
+        sourceKey: "tanam_pohon_id",
+        foreignKey: "tanam_pohon_id",
+      });
     }
   };
   Tanam_Pohon.init({

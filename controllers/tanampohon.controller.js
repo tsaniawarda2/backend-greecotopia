@@ -1,14 +1,15 @@
 const TANAMPOHON_MODEL = require("../models").Tanam_Pohon;
+const Participant = require("../models").Participant
 
 class TanamPohonController {
   // GET All Tanam Pohon
   static async getAllTanamPohons(req, res) {
     try {
       const dataTanamPohon = await TANAMPOHON_MODEL.findAll({
-        // include: {
-        //   model: Participant,
-        //   attributes: ['user_id']
-        // }
+        include: {
+          model: Participant,
+          attributes: ['user_id']
+        }
       });
 
       if (dataTanamPohon.length != 0) {
