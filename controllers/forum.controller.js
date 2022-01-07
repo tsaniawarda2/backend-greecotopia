@@ -1,4 +1,5 @@
 const FORUM_MODEL = require("../models").Forum;
+const Issue = require("../models").Issue
 
 class ForumController {
   // POST New Forum
@@ -6,7 +7,8 @@ class ForumController {
     try {
       const newForum = {
         title: req.body.title,
-        image: req.body.image,
+        image_url: req.body.image_url,
+        banner_url: req.body.banner_url,
         description: req.body.description,
       };
       FORUM_MODEL.create(newForum)
@@ -27,7 +29,14 @@ class ForumController {
   // GET All Forum
   static async getAllForums(req, res) {
     try {
-      const dataForum = await FORUM_MODEL.findAll();
+      const dataForum = await FORUM_MODEL.findAll(
+        {
+          include: {
+            model: Issue,
+            attributes: ['issue_id']
+          }
+        }
+      );
 
       if (dataForum.length != 0) {
         res.status(200).send({
@@ -55,6 +64,10 @@ class ForumController {
         where: {
           forum_id: Number(forumID),
         },
+        include: {
+          model: Issue,
+          attributes: ['issue_id']
+        }
       });
 
       if (dataForum) {
@@ -79,11 +92,12 @@ class ForumController {
     try {
       const forumID = req.params.id;
       console.log(forumID);
-      const { title, image, description } = req.body;
+      const { title, image_url, banner_url, description } = req.body;
 
       const updateForum = {
         title: title,
-        image: image,
+        image_url: image_url,
+        banner_url: banner_url,
         description: description,
         createdAt: new Date(),
         updatedAt: new Date(),
