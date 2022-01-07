@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: "participant_id",
         foreignKey: "participant_id",
       });
+      Participant.belongsTo(models.Tanam_Pohon, {
+        foreignKey: "tanam_pohon_id",
+        targetKey: "tanam_pohon_id",
+      });
     }
   }
   Participant.init(
