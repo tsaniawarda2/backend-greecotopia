@@ -1,4 +1,5 @@
 const COMMENT_MODEL = require("../models").Comment;
+const User = require("../models").User;
 const { v4: uuidV4 } = require("uuid");
 
 class CommentController {
@@ -56,7 +57,9 @@ class CommentController {
             author: req.body.depends_on.author,
             uuid: req.body.depends_on.uuid,
           },
-          likes: []
+          likes: [],
+          createdAt: new Date(),
+          updatedAt: new Date()
         };
 
         const new_rep_comment = rep_comments
@@ -92,7 +95,14 @@ class CommentController {
   // GET All Comment
   static async getAllComments(req, res) {
     try {
-      const dataComment = await COMMENT_MODEL.findAll();
+      const dataComment = await COMMENT_MODEL.findAll(
+        {
+          include: {
+            model: User,
+            attributes: ['user_id', 'fullname','username', 'image_url']
+          }
+        }
+      );
 
       if (dataComment.length != 0) {
         const result = dataComment.map((comment) => {
@@ -141,6 +151,10 @@ class CommentController {
         where: {
           comment_id: Number(commentID),
         },
+        include: {
+          model: User,
+          attributes: ['user_id', 'fullname','username', 'image_url']
+        }
       });
 
       if (dataComment) {

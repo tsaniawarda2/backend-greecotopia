@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "role_id",
         targetKey: "role_id",
       });
-      User.hasMany(models.Comment, {
+      User.belongsTo(models.Comment, {
         sourceKey: "user_id",
         foreignKey: "user_id",
       });
