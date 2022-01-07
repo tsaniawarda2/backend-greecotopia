@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       title: DataTypes.STRING(40),
       summary: DataTypes.STRING,
       author_name: DataTypes.STRING(40),
-      image: DataTypes.STRING,
+      image_url: DataTypes.STRING,
       likes: DataTypes.INTEGER,
       comments: DataTypes.INTEGER,
       tag_id: DataTypes.INTEGER,

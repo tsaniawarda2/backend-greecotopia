@@ -1,18 +1,18 @@
-'use strict';
-const data = require('../data/forums.json')
+"use strict";
+const data = require("../data/forums.json");
 
-const dataForum = []
+const dataForum = [];
 
-data.forEach(forum => {
+data.forEach((forum) => {
   const temp = {
     title: forum.title,
-    image: forum.image,
+    image_url: forum.image,
     description: forum.description,
     createdAt: new Date(),
-    updatedAt: new Date()
-  }
-  dataForum.push(temp)
-})
+    updatedAt: new Date(),
+  };
+  dataForum.push(temp);
+});
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -24,8 +24,8 @@ module.exports = {
      *   name: 'John Doe',
      *   isBetaMember: false
      * }], {});
-    */
-     await queryInterface.bulkInsert('Forums', dataForum, {})
+     */
+    await queryInterface.bulkInsert("Forums", dataForum, {});
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -35,6 +35,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-     await queryInterface.bulkDelete('Forums', null, {});
-  }
+    await queryInterface.bulkDelete("Forums", null, {});
+  },
 };
