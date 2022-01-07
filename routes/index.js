@@ -3,8 +3,10 @@ const express = require("express");
 const router = express.Router();
 
 // Router
-const userRoutes = require("./user");
 const authRoutes = require("./auth");
+const userRoutes = require("./user");
+const profileRoutes = require("./profile");
+
 const forumRoutes = require("./forum");
 const tagRoutes = require("./tag");
 const issueRoutes = require("./issues");
@@ -41,6 +43,9 @@ router.get("/", (req, res) => {
 router.use("/auth", authRoutes);
 // Path User
 router.use("/users", userRoutes);
+// Path Profile
+router.use("/profile", profileRoutes);
+
 // Path Forums
 router.use("/forums", forumRoutes);
 // Path Tags
@@ -51,6 +56,7 @@ router.use("/issues", issueRoutes);
 router.use("/favoriteissues", favoriteissuesRoutes);
 // Path Comments
 router.use("/comments", commentRoutes);
+
 //Path Tanam Pohon
 router.use("/tanampohons", tanamPohonRoutes);
 //Path Participant

@@ -1,5 +1,4 @@
 const DOCUMENTATION_MODEL = require("../models").Documentation;
-const USER_MODEL = require("../models").User;
 const PARTICIPANT_MODEL = require("../models").Participant;
 const TANAMPOHON_MODEL = require("../models").Tanam_Pohon;
 

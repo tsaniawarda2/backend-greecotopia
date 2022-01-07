@@ -51,7 +51,7 @@ class CommentController {
           author: {
             user_id: req.userAccount.user_id,
             username: req.userAccount.username,
-            avatar: req.userAccount.avatar,
+            image_url: req.userAccount.image_url,
           },
           depends_on: {
             author: req.body.depends_on.author,
@@ -59,7 +59,7 @@ class CommentController {
           },
           likes: [],
           createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
         };
 
         const new_rep_comment = rep_comments
@@ -95,14 +95,12 @@ class CommentController {
   // GET All Comment
   static async getAllComments(req, res) {
     try {
-      const dataComment = await COMMENT_MODEL.findAll(
-        {
-          include: {
-            model: User,
-            attributes: ['user_id', 'fullname','username', 'image_url']
-          }
-        }
-      );
+      const dataComment = await COMMENT_MODEL.findAll({
+        include: {
+          model: User,
+          attributes: ["user_id", "fullname", "username", "image_url"],
+        },
+      });
 
       if (dataComment.length != 0) {
         const result = dataComment.map((comment) => {
@@ -153,8 +151,8 @@ class CommentController {
         },
         include: {
           model: User,
-          attributes: ['user_id', 'fullname','username', 'image_url']
-        }
+          attributes: ["user_id", "fullname", "username", "image_url"],
+        },
       });
 
       if (dataComment) {
@@ -243,42 +241,48 @@ class CommentController {
     }
   }
 
-  static async updateLikeCommentById(req, res){
+  static async updateLikeCommentById(req, res) {
     try {
       const commentID = req.params.id;
       const userID = req.userAccount.user_id;
-  
+
       const { rep_comments_uuid, like } = req.body;
-      
+
       const dataComment = await COMMENT_MODEL.findOne({
         where: {
-          comment_id: Number(commentID)
+          comment_id: Number(commentID),
         },
       });
 
-      if(dataComment){
-        if(rep_comments_uuid){
-          const repComment = dataComment.dataValues.rep_comments
-          const repCommentParse = JSON.parse(repComment)
+      if (dataComment) {
+        if (rep_comments_uuid) {
+          const repComment = dataComment.dataValues.rep_comments;
+          const repCommentParse = JSON.parse(repComment);
 
-          const findRepComment = repCommentParse.filter(rep_comment => rep_comment.uuid == rep_comments_uuid)
+          const findRepComment = repCommentParse.filter(
+            (rep_comment) => rep_comment.uuid == rep_comments_uuid
+          );
 
-          if(findRepComment.length !== 0){
-            const currRepComment = dataComment.dataValues.rep_comments ? JSON.parse(dataComment.dataValues.rep_comments) : []
+          if (findRepComment.length !== 0) {
+            const currRepComment = dataComment.dataValues.rep_comments
+              ? JSON.parse(dataComment.dataValues.rep_comments)
+              : [];
             console.log(currRepComment);
-            const newRepComments = currRepComment.map(comment => {
-              if(comment.uuid === rep_comments_uuid){
-                if(like){
+            const newRepComments = currRepComment.map((comment) => {
+              if (comment.uuid === rep_comments_uuid) {
+                if (like) {
                   console.log(comment, "<< like");
-                  comment.likes.push(userID)
+                  comment.likes.push(userID);
                 } else {
-                  comment.likes = comment.likes.filter(commentLike => commentLike !== userID)
+                  comment.likes = comment.likes.filter(
+                    (commentLike) => commentLike !== userID
+                  );
                 }
-                return comment
+                return comment;
               } else {
-                return comment
+                return comment;
               }
-            })
+            });
 
             await COMMENT_MODEL.update(
               {
@@ -294,26 +298,29 @@ class CommentController {
               message: "Success like a reply comment!",
               data: newRepComments,
             });
-          }
-          else {
+          } else {
             res.status(404).send({
               message: `Data Reply Comment where Comment uuid is ${rep_comments_uuid} Not Found`,
             });
           }
         } else {
-          let currCommentLike = dataComment.dataValues.like ? dataComment.dataValues.like : [];
+          let currCommentLike = dataComment.dataValues.like
+            ? dataComment.dataValues.like
+            : [];
 
-          if(like){
-            currCommentLike.push({user_id: userID})
+          if (like) {
+            currCommentLike.push({ user_id: userID });
           } else {
-            currCommentLike = currCommentLike.filter(commentLike => commentLike.user_id !== userID);
+            currCommentLike = currCommentLike.filter(
+              (commentLike) => commentLike.user_id !== userID
+            );
           }
-          
+
           const updateLike = currCommentLike;
 
           await COMMENT_MODEL.update(
             {
-              like : updateLike
+              like: updateLike,
             },
             {
               where: {
@@ -321,7 +328,7 @@ class CommentController {
               },
             }
           );
-          
+
           res.status(200).send({
             message: `Data Comment where Comment Id is ${commentID} was Updated like Successfully`,
             updatedLike: updateLike,
