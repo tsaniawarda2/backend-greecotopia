@@ -6,7 +6,8 @@ const dataForum = [];
 data.forEach((forum) => {
   const temp = {
     title: forum.title,
-    image_url: forum.image,
+    image_url: forum.image_url,
+    banner_url: forum.banner_url,
     description: forum.description,
     createdAt: new Date(),
     updatedAt: new Date(),

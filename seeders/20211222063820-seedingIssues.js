@@ -9,7 +9,7 @@ data.forEach((issue) => {
     title: issue.title,
     summary: issue.summary,
     author_name: issue.author_name,
-    image_url: issue.image,
+    image_url: issue.image_url,
     likes: issue.likes,
     comments: issue.comments,
     createdAt: new Date(),
