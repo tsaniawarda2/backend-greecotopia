@@ -12,7 +12,7 @@ router.get(
 router.get("/:id", ParticipantController.getParticipantById);
 
 // Authentication
-// router.use(authentication);
+router.use(authentication);
 router.post("/", ParticipantController.postNewParticipant);
 
 module.exports = router;

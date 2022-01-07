@@ -5,7 +5,7 @@ class ParticipantController {
   // POST New Participant
   static async postNewParticipant(req, res, next) {
     try {
-      const { name, no_hp, number_of_trees, tanam_pohon_id, user_id } = req.body;
+      const { name, no_hp, number_of_trees, tanam_pohon_id } = req.body;
 
       const dataTanamPohon = await TANAMPOHON_MODEL.findOne({
         where: {
@@ -25,9 +25,8 @@ class ParticipantController {
             name,
             no_hp,
             number_of_trees,
-            // user_id: req.userAccount.user_id,
+            user_id: req.userAccount.user_id,
             tanam_pohon_id,
-            user_id
           });
 
           res.status(200).json({
@@ -37,9 +36,8 @@ class ParticipantController {
               name,
               no_hp,
               number_of_trees,
-              // user_id: req.userAccount.user_id,
+              user_id: req.userAccount.user_id,
               tanam_pohon_id,
-              user_id
             },
           });
         }
