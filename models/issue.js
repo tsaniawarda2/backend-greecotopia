@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "forum_id",
         targetKey: "forum_id",
       });
+      Issue.hasMany(models.Comment, {
+        sourceKey: "issue_id",
+        foreignKey: "issue_id",
+      });
     }
   }
   Issue.init(

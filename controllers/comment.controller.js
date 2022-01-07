@@ -1,5 +1,6 @@
 const COMMENT_MODEL = require("../models").Comment;
-const User = require("../models").User;
+const USER_MODEL = require("../models").User;
+const ISSUE_MODEL = require("../models").Issue;
 const { v4: uuidV4 } = require("uuid");
 
 class CommentController {
@@ -97,7 +98,7 @@ class CommentController {
     try {
       const dataComment = await COMMENT_MODEL.findAll({
         include: {
-          model: User,
+          model: USER_MODEL,
           attributes: ["user_id", "fullname", "username", "image_url"],
         },
       });
@@ -125,7 +126,7 @@ class CommentController {
         });
         res.status(200).send({
           message: "Success Get All Comments",
-          comments: result,
+          comments: dataComment,
         });
       } else {
         res.status(404).send({
@@ -150,7 +151,7 @@ class CommentController {
           comment_id: Number(commentID),
         },
         include: {
-          model: User,
+          model: USER_MODEL,
           attributes: ["user_id", "fullname", "username", "image_url"],
         },
       });
@@ -175,17 +176,25 @@ class CommentController {
   // GET All Comment by Issue Id
   static async getCommentByIssueId(req, res) {
     try {
-      const issue = req.params.id;
+      const issueID = req.params.id;
 
-      const dataComment = await COMMENT_MODEL.findOne({
+      const dataComment = await ISSUE_MODEL.findOne({
+        include: {
+          model: COMMENT_MODEL,
+          include: {
+            model: USER_MODEL,
+            attributes: ["user_id", "fullname", "username", "image_url"],
+          },
+        },
+        attributes: ["issue_id", "title"],
         where: {
-          issue_id: issue,
+          issue_id: Number(issueID),
         },
       });
 
       if (dataComment) {
         res.status(200).send({
-          message: `Success Get Comment where Issue Id is ${issue}`,
+          message: `Success Get Comment where Issue Id is ${issueID}`,
           comments: dataComment,
         });
       } else {
