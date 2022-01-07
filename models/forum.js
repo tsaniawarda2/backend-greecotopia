@@ -8,14 +8,18 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Forum.hasMany(models.Issue, {
+        sourceKey: "forum_id",
+        foreignKey: "forum_id",
+      });
     }
   }
   Forum.init(
     {
       forum_id: DataTypes.INTEGER,
       title: DataTypes.STRING(40),
-      image: DataTypes.STRING,
+      image_url: DataTypes.STRING,
+      banner_url: DataTypes.STRING,
       description: DataTypes.STRING,
     },
     {
