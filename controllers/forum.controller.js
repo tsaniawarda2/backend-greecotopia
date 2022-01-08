@@ -52,9 +52,9 @@ class ForumController {
           title: forum.dataValues.title,
           image_url: forum.dataValues.image_url,
           description: forum.dataValues.description,
-          Issues: dataIssue.filter((issue) => {
-            issue.dataValues.forum_id === forum.dataValues.forum_id;
-          }),
+          Issues: dataIssue.filter(
+            (issue) => issue.dataValues.forum_id === forum.dataValues.forum_id
+          ),
         };
         return temp;
       });
