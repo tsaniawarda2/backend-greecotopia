@@ -72,7 +72,7 @@ class DocumentationController {
       const data = await TANAMPOHON_MODEL.findAll({
         include: {
           model: DOCUMENTATION_MODEL,
-          attributes: ["documentation_id"],
+          attributes: ["image_url"],
         },
         attributes: ["title"],
       });
