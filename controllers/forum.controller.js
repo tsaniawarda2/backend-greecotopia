@@ -46,29 +46,15 @@ class ForumController {
         },
       });
 
-      const issueID = dataIssue.map((issue) => issue.dataValues.issue_id);
-      const dataComment = await Comment.findAll({
-        attributes: ["comment_id"],
-        where: {
-          issue_id: {
-            [Op.in]: issueID,
-          },
-        },
-      });
-
       const result = dataForum?.map((forum) => {
         const temp = {
           forum_id: forum.dataValues.forum_id,
           title: forum.dataValues.title,
           image_url: forum.dataValues.image_url,
           description: forum.dataValues.description,
-          Issues: dataIssue.filter(
-            (issue) => issue.dataValues.forum_id === forum.dataValues.forum_id
-          ),
-          Comments: dataComment.filter(
-            (comment) =>
-              comment.dataValues.comment_id === dataIssue.dataValues.comment_id
-          ),
+          Issues: dataIssue.filter((issue) => {
+            issue.dataValues.forum_id === forum.dataValues.forum_id;
+          }),
         };
         return temp;
       });

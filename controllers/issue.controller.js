@@ -1,4 +1,6 @@
+const { Op } = require("sequelize");
 const ISSUE_MODEL = require("../models").Issue;
+const { Comment } = require("../models");
 
 class IssueController {
   // POST New Issue
@@ -33,12 +35,40 @@ class IssueController {
   // GET All Issue
   static async getAllIssues(req, res) {
     try {
-      const dataIssue = await ISSUE_MODEL.findAll();
+      const dataIssue = await ISSUE_MODEL.findAll({
+        attributes: {
+          exclude: ["updatedAt"],
+        },
+      });
+
+      const issueID = dataIssue.map((issue) => issue.dataValues.issue_id);
+
+      const dataComment = await Comment.findAll({
+        where: {
+          issue_id: {
+            [Op.in]: issueID,
+          },
+        },
+      });
+
+      const result = dataIssue?.map((issue) => {
+        const temp = {
+          issue_id: issue.dataValues.issue_id,
+          title: issue.dataValues.title,
+          summary: issue.dataValues.summary,
+          image_url: issue.dataValues.image_url,
+          Comments: dataComment.filter(
+            (comment) =>
+              comment.dataValues.issue_id === issue.dataValues.issue_id
+          ),
+        };
+        return temp;
+      });
 
       if (dataIssue.length != 0) {
         res.status(200).send({
           message: "Success Get All Issues",
-          issues: dataIssue,
+          issues: result,
         });
       } else {
         res.status(404).send({
