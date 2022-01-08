@@ -92,7 +92,7 @@ class ForumController {
       if (dataForum.length != 0) {
         res.status(200).send({
           message: "Success Get All Forums",
-          forums: result,
+          Forums: result,
         });
       } else {
         res.status(404).send({

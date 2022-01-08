@@ -1,6 +1,6 @@
 const { Op } = require("sequelize");
 const ISSUE_MODEL = require("../models").Issue;
-const { Comment } = require("../models");
+const { User, Forum, Comment } = require("../models");
 
 class IssueController {
   // POST New Issue
@@ -73,7 +73,7 @@ class IssueController {
       if (dataIssue.length != 0) {
         res.status(200).send({
           message: "Success Get All Issues",
-          issues: result,
+          Issues: result,
         });
       } else {
         res.status(404).send({
@@ -91,7 +91,6 @@ class IssueController {
   static async getIssuebyId(req, res) {
     try {
       const issueID = req.params.id;
-
       const dataIssue = await ISSUE_MODEL.findOne({
         where: {
           issue_id: Number(issueID),
@@ -101,7 +100,7 @@ class IssueController {
       if (dataIssue) {
         res.status(200).send({
           message: `Success Get Issue Id ${issueID}`,
-          Issues: dataIssue,
+          dataIssues: dataIssue,
         });
       } else {
         res.status(404).send({
@@ -208,18 +207,18 @@ class IssueController {
   // GET All Issue by Forum Id
   static async getIssuebyForumId(req, res) {
     try {
-      const forum = req.params.id;
+      const forumID = req.params.id;
 
       const dataIssue = await ISSUE_MODEL.findAll({
         where: {
-          forum_id: forum,
+          forum_id: forumID,
         },
       });
 
       if (dataIssue.length !== 0) {
         res.status(200).send({
           message: `Success Get Issue`,
-          issues: dataIssue,
+          Issues: dataIssue,
         });
       } else {
         res.status(404).send({
