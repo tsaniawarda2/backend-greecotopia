@@ -1,5 +1,6 @@
+const { Op } = require("sequelize");
 const FORUM_MODEL = require("../models").Forum;
-const Issue = require("../models").Issue
+const { Comment, Issue } = require("../models");
 
 class ForumController {
   // POST New Forum
@@ -29,19 +30,53 @@ class ForumController {
   // GET All Forum
   static async getAllForums(req, res) {
     try {
-      const dataForum = await FORUM_MODEL.findAll(
-        {
-          include: {
-            model: Issue,
-            attributes: ['issue_id']
-          }
-        }
-      );
+      const dataForum = await FORUM_MODEL.findAll({
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+      });
+
+      const forumID = dataForum.map((forum) => forum.dataValues.forum_id);
+
+      const dataIssue = await Issue.findAll({
+        where: {
+          forum_id: {
+            [Op.in]: forumID,
+          },
+        },
+      });
+
+      const issueID = dataIssue.map((issue) => issue.dataValues.issue_id);
+      const dataComment = await Comment.findAll({
+        attributes: ["comment_id"],
+        where: {
+          issue_id: {
+            [Op.in]: issueID,
+          },
+        },
+      });
+
+      const result = dataForum?.map((forum) => {
+        const temp = {
+          forum_id: forum.dataValues.forum_id,
+          title: forum.dataValues.title,
+          image_url: forum.dataValues.image_url,
+          description: forum.dataValues.description,
+          Issues: dataIssue.filter(
+            (issue) => issue.dataValues.forum_id === forum.dataValues.forum_id
+          ),
+          Comments: dataComment.filter(
+            (comment) =>
+              comment.dataValues.comment_id === dataIssue.dataValues.comment_id
+          ),
+        };
+        return temp;
+      });
 
       if (dataForum.length != 0) {
         res.status(200).send({
           message: "Success Get All Forums",
-          forums: dataForum,
+          forums: result,
         });
       } else {
         res.status(404).send({
@@ -61,13 +96,15 @@ class ForumController {
       const forumID = req.params.id;
 
       const dataForum = await FORUM_MODEL.findOne({
+        include: {
+          model: Issue,
+          include: {
+            model: Comment,
+          },
+        },
         where: {
           forum_id: Number(forumID),
         },
-        include: {
-          model: Issue,
-          attributes: ['issue_id']
-        }
       });
 
       if (dataForum) {

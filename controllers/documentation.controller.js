@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const DOCUMENTATION_MODEL = require("../models").Documentation;
 const PARTICIPANT_MODEL = require("../models").Participant;
 const TANAMPOHON_MODEL = require("../models").Tanam_Pohon;
@@ -70,16 +71,37 @@ class DocumentationController {
   static async getAllDocumentation(req, res, next) {
     try {
       const data = await TANAMPOHON_MODEL.findAll({
-        include: {
-          model: DOCUMENTATION_MODEL,
-          attributes: ["documentation_id"],
+        attributes: ["tanam_pohon_id", "title"],
+      });
+
+      const tanamPohonID = data?.map(
+        (tanamPohon) => tanamPohon.dataValues.tanam_pohon_id
+      );
+
+      const dataDocumentation = await DOCUMENTATION_MODEL.findAll({
+        where: {
+          tanam_pohon_id: {
+            [Op.in]: tanamPohonID,
+          },
         },
-        attributes: ["title"],
+      });
+
+      const result = data?.map((tanamPohon) => {
+        const temp = {
+          tanam_pohon_id: tanamPohon.dataValues.tanam_pohon_id,
+          title: tanamPohon.dataValues.title,
+          Documentations: dataDocumentation.filter(
+            (doc) =>
+              doc.dataValues.tanam_pohon_id ===
+              tanamPohon.dataValues.tanam_pohon_id
+          ),
+        };
+        return temp;
       });
 
       res.status(200).send({
         message: `Success Get Data Documentations`,
-        documentations: data,
+        data: result,
       });
     } catch (error) {
       next(error);
