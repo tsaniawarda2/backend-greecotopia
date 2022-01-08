@@ -126,7 +126,7 @@ class DocumentationController {
         where: {
           tanam_pohon_id: Number(tanamPohonID),
         },
-        attributes: ["title"],
+        attributes: ["tanam_pohon_id", "title"],
       });
 
       if (dataDocumentation) {
