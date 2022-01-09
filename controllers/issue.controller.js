@@ -91,7 +91,15 @@ class IssueController {
   static async getIssuebyId(req, res) {
     try {
       const issueID = req.params.id;
+
       const dataIssue = await ISSUE_MODEL.findOne({
+        include: {
+          model: Comment,
+          include: {
+            model: User,
+            attributes: ["user_id", "fullname", "username", "image_url"],
+          },
+        },
         where: {
           issue_id: Number(issueID),
         },
@@ -100,7 +108,7 @@ class IssueController {
       if (dataIssue) {
         res.status(200).send({
           message: `Success Get Issue Id ${issueID}`,
-          dataIssues: dataIssue,
+          Issues: dataIssue,
         });
       } else {
         res.status(404).send({

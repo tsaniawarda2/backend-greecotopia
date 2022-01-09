@@ -186,7 +186,6 @@ class CommentController {
             attributes: ["user_id", "fullname", "username", "image_url"],
           },
         },
-        attributes: ["issue_id", "title"],
         where: {
           issue_id: Number(issueID),
         },
@@ -195,7 +194,7 @@ class CommentController {
       if (dataComment) {
         res.status(200).send({
           message: `Success Get Comment where Issue Id is ${issueID}`,
-          comments: dataComment,
+          Issues: dataComment,
         });
       } else {
         res.status(404).send({

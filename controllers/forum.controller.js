@@ -150,25 +150,11 @@ class ForumController {
               comment.dataValues.issue_id === issue.dataValues.issue_id
           ),
           tag_id: issue.dataValues.tag_id,
-          forum_id: dataForum,
+          dataForum: dataForum,
           createdAt: issue.dataValues.createdAt,
         };
         return tempIssues;
       });
-
-      // const result = dataForum?.find((forum) => {
-      //   const temp = {
-      //     forum_id: forum.dataValues.forum_id,
-      //     title: forum.dataValues.title,
-      //     image_url: forum.dataValues.image_url,
-      //     banner_url: forum.dataValues.banner_url,
-      //     description: forum.dataValues.description,
-      //     Issues: resultIssues.filter(
-      //       (issue) => issue.forum_id === forum.dataValues.forum_id
-      //     ),
-      //   };
-      //   return temp;
-      // });
 
       if (dataForum) {
         res.status(200).send({
