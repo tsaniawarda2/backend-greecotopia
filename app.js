@@ -8,14 +8,14 @@ const bodyParser = require("body-parser");
 const routes = require("./routes");
 const errorHandler = require("./middleware/errorHandler");
 const port = process.env.PORT;
-const cors = require("cors")
+const cors = require("cors");
 
 async function main() {
   try {
     const app = express();
 
     // Middleware
-    app.use(cors())
+    app.use(cors());
     app.use(
       express.urlencoded({
         extended: true,

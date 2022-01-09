@@ -21,12 +21,28 @@ module.exports = (sequelize, DataTypes) => {
   Issue.init(
     {
       issue_id: DataTypes.INTEGER,
-      title: DataTypes.STRING(40),
-      summary: DataTypes.STRING,
+      title: {
+        type: DataTypes.STRING(40),
+        validate: {
+          len: {
+            args: [5, 40],
+            msg: `Title must be between 5 and 40 characters`,
+          },
+        },
+      },
+      summary: {
+        type: DataTypes.STRING,
+        validate: {
+          len: {
+            args: [24, 125],
+            msg: `Summary must be between 24 and 125 characters`,
+          },
+        },
+      },
+      description: DataTypes.TEXT,
       author_name: DataTypes.STRING(40),
       image_url: DataTypes.STRING,
       likes: DataTypes.INTEGER,
-      // comments: DataTypes.INTEGER,
       tag_id: DataTypes.INTEGER,
       forum_id: DataTypes.INTEGER,
     },

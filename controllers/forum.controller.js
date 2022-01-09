@@ -46,15 +46,46 @@ class ForumController {
         },
       });
 
+      const issueID = dataIssue.map((issue) => issue.dataValues.issue_id);
+
+      const dataComment = await Comment.findAll({
+        where: {
+          issue_id: {
+            [Op.in]: issueID,
+          },
+        },
+      });
+
+      const resultIssues = dataIssue?.map((issue) => {
+        const tempIssues = {
+          issue_id: issue.dataValues.issue_id,
+          title: issue.dataValues.title,
+          summary: issue.dataValues.summary,
+          decsription: issue.dataValues.decsription,
+          author_name: issue.dataValues.author_name,
+          image_url: issue.dataValues.image_url,
+          likes: issue.dataValues.likes,
+          Comments: dataComment.filter(
+            (comment) =>
+              comment.dataValues.issue_id === issue.dataValues.issue_id
+          ),
+          tag_id: issue.dataValues.tag_id,
+          forum_id: issue.dataValues.forum_id,
+          createdAt: issue.dataValues.createdAt,
+        };
+        return tempIssues;
+      });
+
       const result = dataForum?.map((forum) => {
         const temp = {
           forum_id: forum.dataValues.forum_id,
           title: forum.dataValues.title,
           image_url: forum.dataValues.image_url,
+          banner_url: forum.dataValues.banner_url,
           description: forum.dataValues.description,
-          Issues: dataIssue.filter((issue) => {
-            issue.dataValues.forum_id === forum.dataValues.forum_id;
-          }),
+          Issues: resultIssues.filter(
+            (issue) => issue.forum_id === forum.dataValues.forum_id
+          ),
         };
         return temp;
       });
@@ -62,7 +93,7 @@ class ForumController {
       if (dataForum.length != 0) {
         res.status(200).send({
           message: "Success Get All Forums",
-          forums: result,
+          Forums: result,
         });
       } else {
         res.status(404).send({
@@ -82,21 +113,56 @@ class ForumController {
       const forumID = req.params.id;
 
       const dataForum = await FORUM_MODEL.findOne({
-        include: {
-          model: Issue,
-          include: {
-            model: Comment,
-          },
-        },
         where: {
           forum_id: Number(forumID),
         },
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+      });
+
+      const id = dataForum.dataValues.forum_id;
+
+      const dataIssue = await Issue.findAll({
+        where: {
+          forum_id: Number(id),
+        },
+      });
+
+      const issueID = dataIssue.map((issue) => issue.dataValues.issue_id);
+
+      const dataComment = await Comment.findAll({
+        where: {
+          issue_id: {
+            [Op.in]: issueID,
+          },
+        },
+      });
+
+      const resultIssues = dataIssue?.map((issue) => {
+        const tempIssues = {
+          issue_id: issue.dataValues.issue_id,
+          title: issue.dataValues.title,
+          summary: issue.dataValues.summary,
+          decsription: issue.dataValues.decsription,
+          author_name: issue.dataValues.author_name,
+          image_url: issue.dataValues.image_url,
+          likes: issue.dataValues.likes,
+          Comments: dataComment.filter(
+            (comment) =>
+              comment.dataValues.issue_id === issue.dataValues.issue_id
+          ),
+          tag_id: issue.dataValues.tag_id,
+          dataForum: dataForum,
+          createdAt: issue.dataValues.createdAt,
+        };
+        return tempIssues;
       });
 
       if (dataForum) {
         res.status(200).send({
           message: `Success Get Forum where Forum Id is ${forumID}`,
-          Forums: dataForum,
+          Forums: resultIssues,
         });
       } else {
         res.status(404).send({

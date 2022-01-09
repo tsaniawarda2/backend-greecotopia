@@ -1,6 +1,6 @@
 const { Op } = require("sequelize");
 const ISSUE_MODEL = require("../models").Issue;
-const { Comment } = require("../models");
+const { User, Forum, Comment } = require("../models");
 
 class IssueController {
   // POST New Issue
@@ -9,10 +9,10 @@ class IssueController {
       const newIssue = {
         title: req.body.title,
         summary: req.body.summary,
+        decsription: req.body.decsription,
         author_name: req.body.author_name,
-        image: req.body.image,
+        image_url: req.body.image_url,
         likes: req.body.likes,
-        comments: req.body.comments,
         tag_id: req.body.tag_id,
         forum_id: req.body.forum_id,
       };
@@ -56,11 +56,16 @@ class IssueController {
           issue_id: issue.dataValues.issue_id,
           title: issue.dataValues.title,
           summary: issue.dataValues.summary,
+          description: issue.dataValues.description,
+          author_name: issue.dataValues.author_name,
           image_url: issue.dataValues.image_url,
+          likes: issue.dataValues.likes,
           Comments: dataComment.filter(
             (comment) =>
               comment.dataValues.issue_id === issue.dataValues.issue_id
           ),
+          tag_id: issue.dataValues.tag_id,
+          forum_id: issue.dataValues.forum_id,
         };
         return temp;
       });
@@ -68,7 +73,7 @@ class IssueController {
       if (dataIssue.length != 0) {
         res.status(200).send({
           message: "Success Get All Issues",
-          issues: result,
+          Issues: result,
         });
       } else {
         res.status(404).send({
@@ -88,15 +93,39 @@ class IssueController {
       const issueID = req.params.id;
 
       const dataIssue = await ISSUE_MODEL.findOne({
+        include: {
+          model: Comment,
+          include: {
+            model: User,
+            attributes: ["user_id", "fullname", "username", "image_url"],
+          },
+        },
         where: {
           issue_id: Number(issueID),
         },
+      });
+      // const id = dataIssue.dataValues.forum_id;
+      const dataForum = await Forum.findOne({
+        include: {
+          model: ISSUE_MODEL,
+          where: {
+            issue_id: Number(issueID),
+          },
+          include: {
+            model: Comment,
+            include: {
+              model: User,
+              attributes: ["user_id", "fullname", "username", "image_url"],
+            },
+          },
+        },
+        attributes: ["forum_id", "title"],
       });
 
       if (dataIssue) {
         res.status(200).send({
           message: `Success Get Issue Id ${issueID}`,
-          Issues: dataIssue,
+          DataIssue: dataForum,
         });
       } else {
         res.status(404).send({
@@ -118,11 +147,10 @@ class IssueController {
       const {
         title,
         summary,
-        author_name,
-        image,
-        likes,
-        comments,
         description,
+        author_name,
+        image_url,
+        likes,
         tag_id,
         forum_id,
       } = req.body;
@@ -130,11 +158,10 @@ class IssueController {
       const updateIssue = {
         title: title,
         summary: summary,
-        author_name: author_name,
-        image: image,
-        likes: likes,
-        comments: comments,
         description: description,
+        author_name: author_name,
+        image_url: image_url,
+        likes: likes,
         createdAt: new Date(),
         updatedAt: new Date(),
         tag_id: tag_id,
@@ -205,18 +232,18 @@ class IssueController {
   // GET All Issue by Forum Id
   static async getIssuebyForumId(req, res) {
     try {
-      const forum = req.params.id;
+      const forumID = req.params.id;
 
       const dataIssue = await ISSUE_MODEL.findAll({
         where: {
-          forum_id: forum,
+          forum_id: forumID,
         },
       });
 
       if (dataIssue.length !== 0) {
         res.status(200).send({
           message: `Success Get Issue`,
-          issues: dataIssue,
+          Issues: dataIssue,
         });
       } else {
         res.status(404).send({

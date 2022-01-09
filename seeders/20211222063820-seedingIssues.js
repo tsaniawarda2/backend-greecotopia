@@ -8,10 +8,10 @@ data.forEach((issue) => {
   const temp = {
     title: issue.title,
     summary: issue.summary,
+    description: issue.description,
     author_name: issue.author_name,
     image_url: issue.image_url,
     likes: issue.likes,
-    comments: issue.comments,
     createdAt: new Date(),
     updatedAt: new Date(),
     tag_id: issue.tag_id,
@@ -22,25 +22,10 @@ data.forEach((issue) => {
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-     */
     await queryInterface.bulkInsert("Issues", dataIssues, {});
   },
 
   down: async (queryInterface, Sequelize) => {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
     await queryInterface.bulkDelete("Issues", null, {});
   },
 };
