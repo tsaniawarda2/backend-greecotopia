@@ -11,7 +11,7 @@ class CommentController {
 
       const newComment = {
         context: req.body.context,
-        like: new Array(),
+        likes: new Array(),
         createdAt: new Date(),
         updatedAt: new Date(),
         rep_comments: null,
@@ -109,7 +109,7 @@ class CommentController {
             context,
             createdAt,
             updatedAt,
-            like,
+            likes,
             rep_comments,
             user_id,
             issue_id,
@@ -118,7 +118,7 @@ class CommentController {
             context,
             createdAt,
             updatedAt,
-            like,
+            likes,
             rep_comments: rep_comments ? JSON.parse(rep_comments) : [],
             user_id,
             issue_id,
@@ -254,7 +254,7 @@ class CommentController {
       const commentID = req.params.id;
       const userID = req.userAccount.user_id;
 
-      const { rep_comments_uuid, like } = req.body;
+      const { rep_comments_uuid, likes } = req.body;
 
       const dataComment = await COMMENT_MODEL.findOne({
         where: {
@@ -278,8 +278,8 @@ class CommentController {
             console.log(currRepComment);
             const newRepComments = currRepComment.map((comment) => {
               if (comment.uuid === rep_comments_uuid) {
-                if (like) {
-                  console.log(comment, "<< like");
+                if (likes) {
+                  console.log(comment, "<< likes");
                   comment.likes.push(userID);
                 } else {
                   comment.likes = comment.likes.filter(
@@ -312,11 +312,11 @@ class CommentController {
             });
           }
         } else {
-          let currCommentLike = dataComment.dataValues.like
-            ? dataComment.dataValues.like
+          let currCommentLike = dataComment.dataValues.likes
+            ? dataComment.dataValues.likes
             : [];
 
-          if (like) {
+          if (likes) {
             currCommentLike.push({ user_id: userID });
           } else {
             currCommentLike = currCommentLike.filter(
@@ -328,7 +328,7 @@ class CommentController {
 
           await COMMENT_MODEL.update(
             {
-              like: updateLike,
+              likes: updateLike,
             },
             {
               where: {
