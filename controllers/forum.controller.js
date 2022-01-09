@@ -81,6 +81,7 @@ class ForumController {
           forum_id: forum.dataValues.forum_id,
           title: forum.dataValues.title,
           image_url: forum.dataValues.image_url,
+          banner_url: forum.dataValues.banner_url,
           description: forum.dataValues.description,
           Issues: resultIssues.filter(
             (issue) => issue.forum_id === forum.dataValues.forum_id
@@ -118,6 +119,7 @@ class ForumController {
       });
 
       const id = dataForum.dataValues.forum_id;
+
       const dataIssue = await Issue.findAll({
         where: {
           forum_id: Number(id),
@@ -134,8 +136,8 @@ class ForumController {
         },
       });
 
-      const result = dataIssue?.map((issue) => {
-        const temp = {
+      const resultIssues = dataIssue?.map((issue) => {
+        const tempIssues = {
           issue_id: issue.dataValues.issue_id,
           title: issue.dataValues.title,
           summary: issue.dataValues.summary,
@@ -148,16 +150,30 @@ class ForumController {
               comment.dataValues.issue_id === issue.dataValues.issue_id
           ),
           tag_id: issue.dataValues.tag_id,
-          forum_id: issue.dataValues.forum_id,
+          forum_id: dataForum,
           createdAt: issue.dataValues.createdAt,
         };
-        return temp;
+        return tempIssues;
       });
+
+      // const result = dataForum?.find((forum) => {
+      //   const temp = {
+      //     forum_id: forum.dataValues.forum_id,
+      //     title: forum.dataValues.title,
+      //     image_url: forum.dataValues.image_url,
+      //     banner_url: forum.dataValues.banner_url,
+      //     description: forum.dataValues.description,
+      //     Issues: resultIssues.filter(
+      //       (issue) => issue.forum_id === forum.dataValues.forum_id
+      //     ),
+      //   };
+      //   return temp;
+      // });
 
       if (dataForum) {
         res.status(200).send({
           message: `Success Get Forum where Forum Id is ${forumID}`,
-          Forums: result,
+          Forums: resultIssues,
         });
       } else {
         res.status(404).send({

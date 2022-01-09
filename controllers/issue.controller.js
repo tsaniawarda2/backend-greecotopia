@@ -56,7 +56,7 @@ class IssueController {
           issue_id: issue.dataValues.issue_id,
           title: issue.dataValues.title,
           summary: issue.dataValues.summary,
-          decsription: issue.dataValues.decsription,
+          description: issue.dataValues.description,
           author_name: issue.dataValues.author_name,
           image_url: issue.dataValues.image_url,
           likes: issue.dataValues.likes,
