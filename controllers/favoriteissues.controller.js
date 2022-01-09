@@ -50,7 +50,7 @@ class FavoriteIssuesController {
     try {
       const user = req.params.id;
 
-      const dataFavIssues = await FAVORITEISSUES_MODEL.findOne({
+      const dataFavIssues = await FAVORITEISSUES_MODEL.findAll({
         where: {
           user_id: user,
         },
