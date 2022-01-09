@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      description: DataTypes.STRING,
+      description: DataTypes.TEXT,
       author_name: DataTypes.STRING(40),
       image_url: DataTypes.STRING,
       likes: DataTypes.INTEGER,

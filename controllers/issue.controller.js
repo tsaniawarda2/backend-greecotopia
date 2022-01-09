@@ -125,7 +125,7 @@ class IssueController {
       if (dataIssue) {
         res.status(200).send({
           message: `Success Get Issue Id ${issueID}`,
-          Forums: dataForum,
+          DataIssue: dataForum,
         });
       } else {
         res.status(404).send({
