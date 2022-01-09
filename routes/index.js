@@ -17,6 +17,7 @@ const tanamPohonRoutes = require("./tanampohon");
 const participantRoutes = require("./participant");
 const documentationRoutes = require("./documentation");
 const messageRoutes = require("./message");
+const claimRewardRoutes = require("./claimreward")
 
 // Check ping
 router.get("/ping", (req, res) => {
@@ -65,5 +66,7 @@ router.use("/participants", participantRoutes);
 router.use("/documentations", documentationRoutes);
 // Path Messages
 router.use("/messages", messageRoutes);
+// Path Claim Reward
+router.use("/claim_rewards", claimRewardRoutes)
 
 module.exports = router;
