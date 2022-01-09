@@ -104,11 +104,28 @@ class IssueController {
           issue_id: Number(issueID),
         },
       });
+      // const id = dataIssue.dataValues.forum_id;
+      const dataForum = await Forum.findOne({
+        include: {
+          model: ISSUE_MODEL,
+          where: {
+            issue_id: Number(issueID),
+          },
+          include: {
+            model: Comment,
+            include: {
+              model: User,
+              attributes: ["user_id", "fullname", "username", "image_url"],
+            },
+          },
+        },
+        attributes: ["forum_id", "title"],
+      });
 
       if (dataIssue) {
         res.status(200).send({
           message: `Success Get Issue Id ${issueID}`,
-          Issues: dataIssue,
+          Forums: dataForum,
         });
       } else {
         res.status(404).send({

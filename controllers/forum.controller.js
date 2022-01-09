@@ -116,6 +116,9 @@ class ForumController {
         where: {
           forum_id: Number(forumID),
         },
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
       });
 
       const id = dataForum.dataValues.forum_id;
