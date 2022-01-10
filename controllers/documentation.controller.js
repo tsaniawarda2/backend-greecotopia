@@ -2,6 +2,7 @@ const { Op } = require("sequelize");
 const DOCUMENTATION_MODEL = require("../models").Documentation;
 const PARTICIPANT_MODEL = require("../models").Participant;
 const TANAMPOHON_MODEL = require("../models").Tanam_Pohon;
+const USER_MODEL = require("../models").User
 
 class DocumentationController {
   // Create New Documentation
@@ -26,6 +27,7 @@ class DocumentationController {
           const dataParticipant = await PARTICIPANT_MODEL.findOne({
             where: {
               user_id: req.userAccount.user_id,
+              tanam_pohon_id: dataTanamPohon.tanam_pohon_id
             },
           });
           // Data Participant Ada?
@@ -38,6 +40,15 @@ class DocumentationController {
               participantID,
               tanam_pohon_id,
             });
+
+            const totalPoints = dataTanamPohon?.dataValues?.reward_point * dataParticipant?.dataValues?.number_of_trees;
+            await USER_MODEL.increment("points", {
+              by: totalPoints,
+              where:{
+                user_id: req.userAccount.user_id
+              }
+            })
+
             res.status(201).send({
               message: `Success Create New Documentation!`,
               documentation: {
