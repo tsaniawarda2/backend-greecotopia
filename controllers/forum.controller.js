@@ -153,16 +153,21 @@ class ForumController {
               comment.dataValues.issue_id === issue.dataValues.issue_id
           ),
           tag_id: issue.dataValues.tag_id,
-          dataForum: dataForum,
+          // dataForum: dataForum,
           createdAt: issue.dataValues.createdAt,
         };
         return tempIssues;
       });
 
+      const ForumsIssues = {
+        Forums: dataForum,
+        Issues: resultIssues
+      }
+
       if (dataForum) {
         res.status(200).send({
           message: `Success Get Forum where Forum Id is ${forumID}`,
-          Forums: resultIssues,
+          Forums: ForumsIssues,
         });
       } else {
         res.status(404).send({
