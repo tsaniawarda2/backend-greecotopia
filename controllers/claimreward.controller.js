@@ -5,7 +5,7 @@ class ClaimRewardController {
   static postNewClaimReward(req, res) {
     try {
       const newClaimReward = {
-        np_hp: req.body.np_hp,
+        no_hp: req.body.no_hp,
         rank: req.body.rank,
         session_month: req.body.session_month,
         year: req.body.year,
