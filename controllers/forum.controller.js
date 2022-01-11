@@ -153,7 +153,7 @@ class ForumController {
               comment.dataValues.issue_id === issue.dataValues.issue_id
           ),
           tag_id: issue.dataValues.tag_id,
-          // dataForum: dataForum,
+          forum_id: issue.dataValues.forum_id,
           createdAt: issue.dataValues.createdAt,
         };
         return tempIssues;
@@ -161,8 +161,8 @@ class ForumController {
 
       const ForumsIssues = {
         Forums: dataForum,
-        Issues: resultIssues
-      }
+        Issues: resultIssues,
+      };
 
       if (dataForum) {
         res.status(200).send({
