@@ -1,6 +1,7 @@
 const COMMENT_MODEL = require("../models").Comment;
 const USER_MODEL = require("../models").User;
 const ISSUE_MODEL = require("../models").Issue;
+const FORUM_MODEL = require("../models").Forum;
 const { v4: uuidV4 } = require("uuid");
 
 class CommentController {
@@ -126,7 +127,7 @@ class CommentController {
         });
         res.status(200).send({
           message: "Success Get All Comments",
-          comments: dataComment,
+          Comments: dataComment,
         });
       } else {
         res.status(404).send({
