@@ -32,6 +32,7 @@ module.exports = {
       },
       points: {
         type: Sequelize.INTEGER,
+        defaultValue: 0
       },
       role_id: {
         type: Sequelize.INTEGER,

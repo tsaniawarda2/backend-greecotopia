@@ -32,12 +32,12 @@ class DocumentationController {
           });
           // Data Participant Ada?
           if (dataParticipant !== null) {
-            const participantID = dataParticipant.dataValues.participant_id;
+            const participant_id = dataParticipant.dataValues.participant_id;
             const newDocumentation = await DOCUMENTATION_MODEL.create({
               caption,
               image_url,
               messages,
-              participantID,
+              participant_id,
               tanam_pohon_id,
             });
 
@@ -56,7 +56,7 @@ class DocumentationController {
                 caption,
                 image_url,
                 messages,
-                participantID,
+                participant_id,
                 tanam_pohon_id,
               },
             });
