@@ -54,7 +54,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       image_url: DataTypes.STRING,
       background_url: DataTypes.STRING,
-      points: DataTypes.INTEGER,
+      points: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+      },
       role_id: {
         type: DataTypes.INTEGER,
         validate: {
@@ -78,6 +81,7 @@ module.exports = (sequelize, DataTypes) => {
           if (!model.role_id) {
             model.role_id = 2;
           }
+          model.points = 0
         },
       },
       sequelize,
