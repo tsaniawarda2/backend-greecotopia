@@ -186,12 +186,33 @@ class UserController {
         offset: 0,
         limit: 10,
         order: [["points", "DESC"]],
-        attributes: ["username", "image_url", "points"],
+        attributes: ["user_id", "fullname", "username", "image_url", "points"],
       });
 
       res.status(200).send({
         message: `Success Get Data Top 10`,
         users: dataTopTen,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+  // GET Top5
+  static async getTopFive(req, res, next) {
+    try {
+      const dataTopFive = await USER_MODEL.findAll({
+        where: {
+          role_id: 2,
+        },
+        offset: 0,
+        limit: 5,
+        order: [["points", "DESC"]],
+        attributes: ["user_id", "fullname", "username", "image_url", "points"],
+      });
+
+      res.status(200).send({
+        message: `Success Get Data Top 5`,
+        users: dataTopFive,
       });
     } catch (error) {
       next(error);
