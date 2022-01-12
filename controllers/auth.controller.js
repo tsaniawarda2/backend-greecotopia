@@ -8,7 +8,7 @@ class AuthController {
   // Register
   static async Register(req, res, next) {
     try {
-      const { fullname, email, username, password, points } = req.body;
+      const { fullname, email, username, password, points, total_trees } = req.body;
 
       // Data kosong?
       if (!fullname || !email || !username || !password) {
@@ -38,6 +38,7 @@ class AuthController {
             username,
             password,
             points,
+            total_trees
           });
 
           res.status(201).send({
@@ -48,6 +49,7 @@ class AuthController {
               username,
               email,
               points,
+              total_trees
             },
           });
         }

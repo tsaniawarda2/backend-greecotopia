@@ -58,6 +58,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         defaultValue: 0
       },
+      total_trees: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+      },
       role_id: {
         type: DataTypes.INTEGER,
         validate: {

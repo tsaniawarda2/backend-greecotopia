@@ -9,7 +9,11 @@ class UserController {
       const dataUser = await USER_MODEL.findAll({
         attributes: {
           exclude: ["password", "createdAt", "updatedAt"],
+        }, 
+        where: {
+          role_id: 2,
         },
+        order: [["points", "DESC"]],
       });
       if (!dataUser) {
         next({
