@@ -6,7 +6,7 @@ const { v4: uuidV4 } = require("uuid");
 
 class CommentController {
   // POST New Comment
-  static postNewComment(req, res) {
+  static async postNewComment(req, res) {
     try {
       const issue = req.params.id;
 
@@ -20,15 +20,13 @@ class CommentController {
         issue_id: issue,
       };
 
-      COMMENT_MODEL.create(newComment)
-        .then((result) => {
-          res.status(200).json({
-            message: "Success post new Comment!",
-            result,
-          });
-        })
-        .catch((err) => res.status(400).json({ message: err }));
+      const result = await COMMENT_MODEL.create(newComment);
+      res.status(200).json({
+        message: "Success post new Comment!",
+        result,
+      });
     } catch (error) {
+      console.log(error, "----------");
       res.status(500).send({
         error: error.message || "Internal Server Error",
       });
@@ -180,13 +178,19 @@ class CommentController {
       const issueID = req.params.id;
 
       const dataComment = await ISSUE_MODEL.findOne({
-        include: {
-          model: COMMENT_MODEL,
-          include: {
-            model: USER_MODEL,
-            attributes: ["user_id", "fullname", "username", "image_url"],
+        include: [
+          {
+            model: COMMENT_MODEL,
+            include: {
+              model: USER_MODEL,
+              attributes: ["user_id", "fullname", "username", "image_url"],
+            },
           },
-        },
+          {
+            model: FORUM_MODEL,
+            attributes: ["forum_id", "title"],
+          },
+        ],
         where: {
           issue_id: Number(issueID),
         },
