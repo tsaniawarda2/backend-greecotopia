@@ -55,6 +55,7 @@ class FavoriteIssuesController {
           user_id: user,
         },
       });
+      console.log(dataFavIssues, "-----------");
 
       if (dataFavIssues) {
         if (Number(req.userAccount.user_id) === Number(user)) {

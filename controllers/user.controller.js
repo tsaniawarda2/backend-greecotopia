@@ -9,7 +9,7 @@ class UserController {
       const dataUser = await USER_MODEL.findAll({
         attributes: {
           exclude: ["password", "createdAt", "updatedAt"],
-        }, 
+        },
         where: {
           role_id: 2,
         },
@@ -217,6 +217,28 @@ class UserController {
       res.status(200).send({
         message: `Success Get Data Top 5`,
         users: dataTopFive,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // GET Top5
+  static async getTopThree(req, res, next) {
+    try {
+      const dataTopThree = await USER_MODEL.findAll({
+        where: {
+          role_id: 2,
+        },
+        offset: 0,
+        limit: 3,
+        order: [["points", "DESC"]],
+        attributes: ["user_id", "fullname", "username", "image_url", "points"],
+      });
+
+      res.status(200).send({
+        message: `Success Get Data Top 3`,
+        users: dataTopThree,
       });
     } catch (error) {
       next(error);

@@ -254,7 +254,9 @@ class CommentController {
     }
   }
 
+  // Update Like
   static async updateLikeCommentById(req, res) {
+    console.log("Masuk");
     try {
       const commentID = req.params.id;
       const userID = req.userAccount.user_id;
@@ -270,25 +272,29 @@ class CommentController {
       if (dataComment) {
         if (rep_comments_uuid) {
           const repComment = dataComment.dataValues.rep_comments;
-          const repCommentParse = JSON.parse(repComment);
+          const repCommentParse = !repComment
+            ? []
+            : typeof repComment === "object"
+            ? repComment
+            : JSON.parse(repComment);
+
+          // const repCommentParse = JSON.parse(repComment);
 
           const findRepComment = repCommentParse.filter(
             (rep_comment) => rep_comment.uuid == rep_comments_uuid
           );
 
           if (findRepComment.length !== 0) {
-            const currRepComment = dataComment.dataValues.rep_comments
-              ? JSON.parse(dataComment.dataValues.rep_comments)
-              : [];
+            const currRepComment = repCommentParse;
             console.log(currRepComment);
             const newRepComments = currRepComment.map((comment) => {
               if (comment.uuid === rep_comments_uuid) {
                 if (likes) {
                   console.log(comment, "<< likes");
-                  comment.likes.push(userID);
+                  comment.likes.push({ user_id: userID });
                 } else {
                   comment.likes = comment.likes.filter(
-                    (commentLike) => commentLike !== userID
+                    (commentLike) => commentLike.user_id !== userID
                   );
                 }
                 return comment;
@@ -296,6 +302,7 @@ class CommentController {
                 return comment;
               }
             });
+            console.log(newRepComments, "----------");
 
             await COMMENT_MODEL.update(
               {

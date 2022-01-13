@@ -8,6 +8,7 @@ const authorization = require("../middleware/authorization");
 router.get("/", UserController.getAllUser);
 router.get("/topTen", UserController.getTopTen);
 router.get("/topFive", UserController.getTopFive);
+router.get("/topThree", UserController.getTopThree);
 router.get("/:id", UserController.getUserbyId);
 
 // Authentication
