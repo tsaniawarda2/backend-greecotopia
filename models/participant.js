@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "tanam_pohon_id",
         targetKey: "tanam_pohon_id",
       });
+      Participant.hasOne(models.User, {
+        sourceKey: "user_id",
+        foreignKey: "user_id",
+      });
     }
   }
   Participant.init(

@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: "user_id",
         foreignKey: "user_id",
       });
+      User.belongsTo(models.Participant),{
+        foreignKey: "user_id",
+        targetKey: "user_id",
+      }
     }
   }
   User.init(
