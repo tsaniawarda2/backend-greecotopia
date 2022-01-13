@@ -127,10 +127,10 @@ class DocumentationController {
       const dataDocumentation = await TANAMPOHON_MODEL.findOne({
         include: {
           model: DOCUMENTATION_MODEL,
-          attributes: ["documentation_id", "caption", "image_url", "createdAt"],
+          attributes: ["documentation_id", "caption", "messages", "image_url", "createdAt"],
           include: {
             model: PARTICIPANT_MODEL,
-            attributes: ["name"],
+            attributes: ["name", "user_id"],
           },
           order: [["createdAt", "DESC"]],
         },
