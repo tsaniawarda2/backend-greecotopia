@@ -256,7 +256,6 @@ class CommentController {
 
   // Update Like
   static async updateLikeCommentById(req, res) {
-    console.log("Masuk");
     try {
       const commentID = req.params.id;
       const userID = req.userAccount.user_id;
@@ -278,8 +277,6 @@ class CommentController {
             ? repComment
             : JSON.parse(repComment);
 
-          // const repCommentParse = JSON.parse(repComment);
-
           const findRepComment = repCommentParse.filter(
             (rep_comment) => rep_comment.uuid == rep_comments_uuid
           );
@@ -290,7 +287,6 @@ class CommentController {
             const newRepComments = currRepComment.map((comment) => {
               if (comment.uuid === rep_comments_uuid) {
                 if (likes) {
-                  console.log(comment, "<< likes");
                   comment.likes.push({ user_id: userID });
                 } else {
                   comment.likes = comment.likes.filter(
