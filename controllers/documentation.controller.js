@@ -130,11 +130,7 @@ class DocumentationController {
           attributes: ["documentation_id", "caption", "messages", "image_url", "createdAt"],
           include: {
             model: PARTICIPANT_MODEL,
-            attributes: ["name"],
-            include: {
-              model: USER_MODEL,
-              attributes: ["username", "image_url"]
-            }
+            attributes: ["name", "user_id"],
           },
           order: [["createdAt", "DESC"]],
         },
