@@ -1,4 +1,6 @@
 const FAVORITEISSUES_MODEL = require("../models").Favorite_Issue;
+const ISSUE_MODEL = require("../models").Issue
+const { Op } = require("sequelize")
 
 class FavoriteIssuesController {
   // POST New Favorite Issues
@@ -54,8 +56,20 @@ class FavoriteIssuesController {
         where: {
           user_id: user,
         },
+        include: {
+            model: ISSUE_MODEL,
+            attributes: ['issue_id', ]
+          }
       });
       console.log(dataFavIssues, "-----------");
+
+      // const dataIssue = await ISSUE_MODEL.findAll({
+      //   where: {
+      //     issue_id: {
+      //       [Op.in] : user.user_id
+      //     }
+      //   }
+      // })
 
       if (dataFavIssues) {
         if (Number(req.userAccount.user_id) === Number(user)) {
@@ -69,6 +83,7 @@ class FavoriteIssuesController {
           });
         }
       } else {
+        console.log("masuk sini");
         res.status(404).send({
           message: "Data Favorite Issue is Not Found",
         });

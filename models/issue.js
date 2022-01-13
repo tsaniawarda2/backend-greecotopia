@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         sourceKey: "issue_id",
         foreignKey: "issue_id",
       });
+      Issue.belongsTo(models.Favorite_Issue, {
+        foreignKey: "issue_id",
+        targetKey: "issue_id",
+      });
     }
   }
   Issue.init(
