@@ -61,6 +61,7 @@ class FavoriteIssuesController {
             attributes: ['issue_id', ]
           }
       });
+      console.log(dataFavIssues, "-----------");
 
       // const dataIssue = await ISSUE_MODEL.findAll({
       //   where: {
