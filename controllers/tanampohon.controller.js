@@ -3,6 +3,35 @@ const Participant = require("../models").Participant
 const { Op } = require("sequelize")
 
 class TanamPohonController {
+  // POST New TanamPohon
+  static postNewTanamPohon(req, res) {
+    try {
+      const newTanamPohon = {
+        title: req.body.title,
+        image_url: req.body.image_url,
+        description: req.body.description,
+        location: req.body.location,
+        date: req.body.date,
+        time: req.body.time,
+        reward_point: req.body.reward_point,
+        due_date: req.body.due_date
+      };
+      TANAMPOHON_MODEL.create(newTanamPohon)
+        .then((result) => {
+          res.status(200).json({
+            message: "Success post new tanam pohon!",
+            result,
+          });
+        })
+        .catch((err) => res.status(400).json({ message: err }));
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        error: error.message || "Internal Server Error",
+      });
+    }
+  }
+
   // GET All Tanam Pohon
   static async getAllTanamPohons(req, res) {
     try {
