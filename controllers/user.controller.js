@@ -223,7 +223,7 @@ class UserController {
     }
   }
 
-  // GET Top5
+  // GET Top3
   static async getTopThree(req, res, next) {
     try {
       const dataTopThree = await USER_MODEL.findAll({

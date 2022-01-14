@@ -1,5 +1,6 @@
 const { Op } = require("sequelize");
 const USER_MODEL = require("../models").User;
+const REWARD_MODEL = require("../models").Claim_Reward;
 const { hashPassword } = require("../helpers/bcrypt");
 
 class ProfileController {

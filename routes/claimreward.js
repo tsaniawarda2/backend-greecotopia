@@ -4,6 +4,7 @@ const router = express.Router();
 const ClaimRewardController = require("../controllers/claimreward.controller");
 const authentication = require("../middleware/authentication");
 
+router.get("/", ClaimRewardController.getAllReward);
 // Authentication
 router.use(authentication);
 router.post("/", ClaimRewardController.postNewClaimReward);
