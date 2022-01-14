@@ -18,7 +18,7 @@ class ParticipantController {
         if (!name || !no_hp || !number_of_trees) {
           next({
             code: 400,
-            message: "'name', 'no_hp', 'number_of_trees' can't be empty",
+            message: "nama, no hp, jumlah pohon tidak boleh kosong",
           });
         } else {
           const newParticipant = await PARTICIPANT_MODEL.create({
@@ -30,7 +30,7 @@ class ParticipantController {
           });
 
           res.status(200).json({
-            message: "Success Register Tanam Pohon!",
+            message: "Pendaftaran Tanam Pohon berhasil!",
             participant: {
               participant_id: newParticipant.participant_id,
               name,

@@ -60,7 +60,7 @@ class ProfileController {
           next({
             code: 400,
             message:
-              "Password must have at least 8 characters consisting of uppercase and lowercase letters, numbers, symbols(!@#$_%^&*). Example: Gre3c0topi4!",
+              "Password harus lebih dari 8 karakter mengandung huruf besar dan kecil, angka, dan simbol(!@#$_%^&*). Example: Gre3c0topi4!",
           });
         }
       }
@@ -69,7 +69,7 @@ class ProfileController {
       if (existingUser && Number(userID) !== Number(existingUser.user_id)) {
         next({
           code: 400,
-          message: "Email or Username already exists",
+          message: "Email atau Username sudah ada",
         });
       } else {
         await USER_MODEL.update(req.body, {
@@ -78,7 +78,7 @@ class ProfileController {
           },
         });
         res.status(200).send({
-          message: `Data Profile was Updated Successfully`,
+          message: `Data Profile berhasil diubah`,
           updatedData: req.body,
         });
       }

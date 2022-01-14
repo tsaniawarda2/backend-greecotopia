@@ -20,7 +20,7 @@ module.exports = (req, res, next) => {
             next();
           } else {
             res.status(401).send({
-              message: "Invalid Auth!",
+              message: "Kamu harus login terlebih dahulu!",
             });
           }
         })
@@ -29,12 +29,12 @@ module.exports = (req, res, next) => {
         });
     } else {
       res.status(401).send({
-        message: "Invalid Auth!",
+        message: "Kamu harus login terlebih dahulu!",
       });
     }
   } else {
     res.status(401).send({
-      message: "Invalid Auth!",
+      message: "Kamu harus login terlebih dahulu!",
     });
   }
 };

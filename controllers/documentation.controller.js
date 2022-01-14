@@ -20,14 +20,14 @@ class DocumentationController {
         if(caption < 5 || caption > 50){
           next({
             code: 400,
-            message: "Caption must be between 5 and 50 characters",
+            message: "Keterangan foto harus kurang dari 5 dan lebih dari 50 karakter",
           });
         }
         // Data Body Kosong?
         if (!caption || !image_url || !messages) {
           next({
             code: 400,
-            message: "'caption', 'image_url', 'messages' can't be empty",
+            message: "Keterangan foto, pesan dan kesan dan foto tidak boleh kosong",
           });
         } else {
           const dataParticipant = await PARTICIPANT_MODEL.findOne({
@@ -56,7 +56,7 @@ class DocumentationController {
             })
 
             res.status(201).send({
-              message: `Success Create New Documentation!`,
+              message: `Sukses unggah dokumentasi!`,
               documentation: {
                 documentation_id: newDocumentation.documentation_id,
                 caption,
@@ -69,7 +69,7 @@ class DocumentationController {
           } else {
             next({
               code: 401,
-              message: "You haven't registered for this activity",
+              message: "Kamu belum daftar di Tanam Pohon ini",
             });
           }
         }
