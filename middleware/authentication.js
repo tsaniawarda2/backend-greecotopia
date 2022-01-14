@@ -6,18 +6,17 @@ module.exports = (req, res, next) => {
   if (token) {
     const decoded = verifyToken(token);
     if (decoded) {
-      const { user_id, email, username, image_url } = decoded;
+      const { user_id, email, username } = decoded;
       USER_MODEL.findOne({
         where: {
           user_id,
           email,
-          username,
-          image_url,
+          username
         },
       })
         .then((data) => {
           if (data) {
-            req.userAccount = decoded;
+            req.userAccount = data.dataValues;
             next();
           } else {
             res.status(401).send({

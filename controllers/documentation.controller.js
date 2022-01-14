@@ -17,6 +17,12 @@ class DocumentationController {
       });
       // Data Tanam Pohon Ada?
       if (dataTanamPohon) {
+        if(caption < 5 || caption > 50){
+          next({
+            code: 400,
+            message: "Caption must be between 5 and 50 characters",
+          });
+        }
         // Data Body Kosong?
         if (!caption || !image_url || !messages) {
           next({
@@ -170,7 +176,7 @@ class DocumentationController {
         },
         include: {
           model: PARTICIPANT_MODEL,
-          attributes: ["name"],
+          attributes: ["name", "user_id"],
         },
       });
       if (dataDocumentation) {
