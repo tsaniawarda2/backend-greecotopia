@@ -31,8 +31,7 @@ module.exports = {
           caption: "Menanam pohon untuk bumiku",
           image_url:
             "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1013&q=80",
-          messages:
-            "Sangat menyenangkan bisa berpartisipasi dikegiatan ini",
+          messages: "Sangat menyenangkan bisa berpartisipasi dikegiatan ini",
           participant_id: 2,
           tanam_pohon_id: 2,
           createdAt: new Date(),
@@ -53,9 +52,8 @@ module.exports = {
           caption: "Jakarta akan hijau dengan pohon kami",
           image_url:
             "https://images.unsplash.com/photo-1569880153113-76e33fc52d5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-          messages:
-            "Semoga dengan pohon ini bisa membawa dampak positif",
-          participant_id: 3,
+          messages: "Semoga dengan pohon ini bisa membawa dampak positif",
+          participant_id: 2,
           tanam_pohon_id: 2,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -64,17 +62,15 @@ module.exports = {
           caption: "",
           image_url:
             "https://images.unsplash.com/photo-1611843467160-25afb8df1074?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-          messages:
-            "",
-          participant_id: 4,
+          messages: "",
+          participant_id: 2,
           tanam_pohon_id: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           caption: "",
-          image_url:
-            "",
+          image_url: "",
           messages:
             "https://images.unsplash.com/photo-1622383563227-04401ab4e5ea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
           participant_id: 1,
